@@ -160,6 +160,108 @@ A aplicação permitirá:
 
 <img width="813" height="354" alt="image" src="https://github.com/user-attachments/assets/9b089774-95ab-47e3-8b45-7a14b1ecae1b" />
 
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    kotlin("jvm") version "1.9.10"
+    application
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.jfree:jfreechart:1.5.4") // JFreeChart
+}
+
+application {
+    mainClass.set("main.MainKt")
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "11"
+}
+package main
+
+import org.jfree.chart.ChartFactory
+import org.jfree.chart.ChartUtils
+import org.jfree.chart.plot.CategoryPlot
+import org.jfree.chart.renderer.category.GanttRenderer
+import org.jfree.data.gantt.Task
+import org.jfree.data.gantt.TaskSeries
+import org.jfree.data.gantt.TaskSeriesCollection
+import org.jfree.data.time.SimpleTimePeriod
+import java.awt.BasicStroke
+import java.awt.Font
+import java.io.File
+import java.util.Calendar
+import java.util.Date
+
+fun date(year: Int, month1Based: Int, day: Int): Date {
+    val cal = Calendar.getInstance()
+    cal.clear()
+    // month1Based: 1 = January ... 10 = October, 11 = November
+    cal.set(year, month1Based - 1, day)
+    return cal.time
+}
+
+fun main() {
+    // Definições das tarefas (usando as datas do teu quadro)
+    val tasks = listOf(
+        Triple("Constituição do grupo", date(2025, 10, 31), date(2025, 10, 31)),
+        Triple("Proposta inicial / Relatório v1", date(2025, 11, 1), date(2025, 11, 5)),
+        Triple("Poster / Vídeo 1 min (Entrega 1)", date(2025, 11, 3), date(2025, 11, 7)),
+        Triple("Protótipo / Alpha", date(2025, 11, 6), date(2025, 11, 9)),
+        Triple("BD create / populate / queries", date(2025, 11, 6), date(2025, 11, 9)),
+        Triple("Atualização relatório intermédio", date(2025, 11, 8), date(2025, 11, 9))
+    )
+
+    // Construir série de tarefas
+    val series = TaskSeries("Cronograma")
+    for ((name, start, end) in tasks) {
+        val t = Task(name, SimpleTimePeriod(start, end))
+        series.add(t)
+    }
+
+    val collection = TaskSeriesCollection()
+    collection.add(series)
+
+    // Criar gráfico Gantt
+    val chart = ChartFactory.createGanttChart(
+        "Gráfico de Gantt - Cronograma de Projeto", // título
+        "Tarefas",                                   // eixo das categorias (y)
+        "Data",                                      // eixo do tempo (x)
+        collection,
+        true,   // legenda
+        true,   // tooltips
+        false   // URLs
+    )
+
+    // Ajustes visuais (opcional)
+    val plot = chart.plot as CategoryPlot
+    plot.domainGridlinesVisible = true
+    plot.rangeGridlineStroke = BasicStroke(0.5f)
+    chart.title.font = Font("SansSerif", Font.BOLD, 18)
+    val renderer = GanttRenderer()
+    renderer.setDrawBarOutline(true)
+    plot.renderer = renderer
+
+    // Guardar como PNG
+    val output = File("gantt.png")
+    ChartUtils.saveChartAsPNG(output, chart, 1200, 600)
+
+    println("Gráfico gerado em: ${output.absolutePath}")
+}
+seu-projeto/
+ ├─ build.gradle.kts
+ └─ src/
+    └─ main/
+       └─ kotlin/
+          └─ main/
+             └─ Main.kt
+
+
 
 
 ---
