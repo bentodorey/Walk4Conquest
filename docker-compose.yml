@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: w4c
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/w4c
+      - JWT_SECRET=devsupersecret
+      - PORT=4000
+    ports:
+      - "4000:4000"
+    command: sh -c "npm run migrate || true && npm run seed || true && npm run dev"
+volumes:
+  db_data:
