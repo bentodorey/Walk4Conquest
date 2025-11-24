@@ -1,65 +1,75 @@
-package com.example.runapp.screens
+package com.example.runapp
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.tooling.preview.Preview
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.runapp.screens.*
+import com.example.runapp.ui.theme.RunappTheme
 
-@Composable
-fun HomeScreen(onLogout: () -> Unit) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color(0xFFF8F9F8) // fundo claro, visível
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(24.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // Título principal
-            Text(
-                text = "🏃‍♂️ Ready to Run?",
-                fontWeight = FontWeight.Bold,
-                fontSize = 26.sp,
-                color = Color(0xFF204E3A)
-            )
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
-            Spacer(modifier = Modifier.height(32.dp))
+        setContent {
+            RunappTheme {
+                val nav = rememberNavController()
 
-            // Botão principal
-            Button(
-                onClick = { /* TODO: iniciar corrida futuramente */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF204E3A)),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-            ) {
-                Text("Start Running", color = Color.White, fontSize = 16.sp)
-            }
+                NavHost(
+                    navController = nav,
+                    startDestination = "start"
+                ) {
+                    composable("start") {
+                        LoadScreen(
+                            onJoinClick = { nav.navigate("join") },
+                            onLoginClick = { nav.navigate("login") }
+                        )
+                    }
 
-            Spacer(modifier = Modifier.height(24.dp))
+                    composable("join") {
+                        SignupScreen(
+                            onBack = { nav.popBackStack() },
+                            onSuccess = { nav.navigate("dados") }
+                        )
+                    }
 
-            // Botão de logout
-            OutlinedButton(
-                onClick = onLogout,
-                border = BorderStroke(1.dp, Color(0xFF204E3A)),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF204E3A)),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-            ) {
-                Text("Logout", fontSize = 16.sp)
+                    composable("dados") {
+                        DadosScreen(
+                            onBack = { nav.popBackStack() },
+                            onFinish = { nav.navigate("home") }
+                        )
+                    }
+
+
+                    composable("login") {
+                        LoginScreen(
+                            onBack = { nav.popBackStack() },
+                            onSuccess = { nav.navigate("home") }
+                        )
+                    }
+
+                    composable("home") {
+                        HomeScreen(
+                            onOpenMap = { nav.navigate("map") },
+                            onLogout = {
+                                nav.navigate("start") {
+                                    popUpTo("start") { inclusive = true }
+                                }
+                            }
+                        )
+                    }
+
+                    composable("map") {
+                        MapScreen(
+                            onBack = { nav.popBackStack() }
+                        )
+                    }
+                }
             }
         }
     }
 }
-

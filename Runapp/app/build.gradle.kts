@@ -2,18 +2,22 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
     namespace = "com.example.runapp"
-    compileSdk {
-        version = release(36)
-    }
+
+    // ⚠️ CORRIGIDO para evitar os 21 erros
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.runapp"
         minSdk = 24
+
+        // ⚠️ CORRIGIDO para combinar com o compileSdk
         targetSdk = 36
+
         versionCode = 1
         versionName = "1.0"
 
@@ -29,6 +33,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -36,8 +41,10 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
@@ -50,6 +57,17 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+
+    implementation("androidx.navigation:navigation-compose:2.9.6")
+
+    implementation("androidx.compose.material:material-icons-extended")
+
+    implementation("com.google.android.gms:play-services-maps:19.2.0")
+    implementation("com.google.maps.android:maps-compose:6.12.2")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
+
+    // Testes
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -57,10 +75,4 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-        implementation("androidx.activity:activity-compose:1.9.3")
-        implementation("androidx.compose.material3:material3")
-        implementation("androidx.compose.ui:ui")
-        implementation("androidx.navigation:navigation-compose:2.8.3")
-        implementation("androidx.compose.material:material-icons-extended")
-    }
-
+}

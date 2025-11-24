@@ -10,9 +10,12 @@ color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable img
+id map
+layout activity_maps
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
+string title_activity_maps
 style Theme.Runapp
 xml backup_rules
 xml data_extraction_rules

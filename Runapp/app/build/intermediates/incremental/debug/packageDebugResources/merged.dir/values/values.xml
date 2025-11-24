@@ -8,5 +8,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">Runapp</string>
+    <string name="title_activity_maps">MapsActivity</string>
     <style name="Theme.Runapp" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>
