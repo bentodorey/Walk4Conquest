@@ -11,9 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -29,13 +26,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .cors() // <-- ATIVA CORS
-                .and()
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable()) 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/auth/login",
+                                "/auth/login/**",
                                 "/auth/register",
-                                "/auth/login"
+                                "/auth/register/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -55,20 +53,5 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-    }
-
-    // CORS configurado para permitir frontend local ex.: React no localhost:3000
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-
-        config.addAllowedOrigin("http://localhost:3000"); // frontend
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        config.setAllowCredentials(true);
-
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
     }
 }

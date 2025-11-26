@@ -127,3 +127,4 @@ public class Utilizador implements UserDetails {
     @Override
     public boolean isEnabled() { return true; }
 }
+

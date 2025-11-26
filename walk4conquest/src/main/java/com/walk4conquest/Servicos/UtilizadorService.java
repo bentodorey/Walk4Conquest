@@ -24,9 +24,7 @@ public class UtilizadorService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // --------------------------
-    // MÉTODOS CRUD BÁSICOS
-    // --------------------------
+
 
     public Utilizador findById(Long id) {
         return repo.findById(id).orElse(null);
