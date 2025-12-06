@@ -4,7 +4,11 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.EmojiEvents
+import androidx.compose.material.icons.filled.Map
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,7 +21,9 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun HomeScreen(
     onOpenMap: () -> Unit,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onOpenLeaderboard: () -> Unit,
+    onOpenMenu: () -> Unit       // 👈 para abrir o side menu
 ) {
     var isRunning by remember { mutableStateOf(true) }
 
@@ -29,20 +35,26 @@ fun HomeScreen(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             // TOPO
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onLogout) {
+                // botão de menu abre o side menu
+                IconButton(onClick = onOpenMenu) {
                     Icon(Icons.Filled.Menu, contentDescription = "Menu", tint = Color.Black)
                 }
+
                 LinearProgressIndicator(
                     progress = if (isRunning) 0.6f else 0.3f,
                     color = Color(0xFF204E3A),
-                    modifier = Modifier.width(100.dp).height(6.dp)
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(6.dp)
                 )
+
                 Text("32°C", color = Color(0xFF204E3A))
             }
 
@@ -64,6 +76,7 @@ fun HomeScreen(
 
             // FUNDO
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
                 // Mini player
                 Card(
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF4A6155)),
@@ -71,14 +84,23 @@ fun HomeScreen(
                     shape = MaterialTheme.shapes.medium
                 ) {
                     Row(
-                        modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Icon(Icons.Filled.Pause, contentDescription = null, tint = Color.White)
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("Sweet Disposition", color = Color.White, fontWeight = FontWeight.Bold)
-                            Text("The Temper Trap", color = Color.White.copy(alpha = 0.7f))
+                            Text(
+                                "Sweet Disposition",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                "The Temper Trap",
+                                color = Color.White.copy(alpha = 0.7f)
+                            )
                         }
                         Icon(Icons.Filled.PlayArrow, contentDescription = null, tint = Color.White)
                     }
@@ -92,13 +114,31 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    // LEADERBOARD
+                    OutlinedButton(
+                        onClick = onOpenLeaderboard,
+                        shape = CircleShape,
+                        border = BorderStroke(2.dp, Color(0xFF204E3A)),
+                        modifier = Modifier.size(70.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = Color(0xFF204E3A)
+                        )
+                    ) {
+                        Icon(
+                            Icons.Filled.EmojiEvents,
+                            contentDescription = "Leaderboard"
+                        )
+                    }
+
                     // MAPA
                     OutlinedButton(
                         onClick = onOpenMap,
                         shape = CircleShape,
                         border = BorderStroke(2.dp, Color(0xFF204E3A)),
                         modifier = Modifier.size(70.dp),
-                        colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF204E3A))
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = Color(0xFF204E3A)
+                        )
                     ) {
                         Icon(Icons.Filled.Map, contentDescription = "Abrir Mapa")
                     }
@@ -108,7 +148,9 @@ fun HomeScreen(
                         onClick = { isRunning = !isRunning },
                         shape = CircleShape,
                         modifier = Modifier.size(80.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF204E3A))
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF204E3A)
+                        )
                     ) {
                         Text(
                             text = if (isRunning) "PAUSE" else "CONTINUE",
@@ -119,12 +161,18 @@ fun HomeScreen(
 
                     // FINISH
                     Button(
-                        onClick = { /* aqui podes guardar a corrida e voltar ao início no futuro */ },
+                        onClick = {
+                            // aqui no futuro podes guardar a corrida e usar onLogout ou navegar
+                        },
                         shape = CircleShape,
                         modifier = Modifier.size(80.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
                     ) {
-                        Text("FINISH", color = Color.White, fontWeight = FontWeight.Bold)
+                        Text(
+                            "FINISH",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
             }

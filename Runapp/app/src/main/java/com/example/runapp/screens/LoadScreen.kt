@@ -1,20 +1,9 @@
 package com.example.runapp.screens
 
-
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,11 +19,15 @@ import androidx.compose.ui.unit.sp
 import com.example.runapp.R
 
 @Composable
-fun LoadScreen(onJoinClick: () -> Unit = {}, onLoginClick: () -> Unit = {}) {
+fun LoadScreen(
+    onJoinClick: () -> Unit = {},
+    onLoginClick: () -> Unit = {}
+) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(0xFF1E2D26)
     ) {
+        // Background com Tint
         Image(
             painter = painterResource(R.drawable.img),
             contentDescription = "Background of people running",
@@ -46,21 +39,34 @@ fun LoadScreen(onJoinClick: () -> Unit = {}, onLoginClick: () -> Unit = {}) {
             )
         )
 
+        // --- CONTEÚDO CENTRADO ---
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(32.dp),
-            verticalArrangement = Arrangement.Bottom,
+                .padding(horizontal = 32.dp),
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            // ⭐ LOGOTIPO CENTRADO
+            Image(
+                painter = painterResource(id = R.drawable.logonoback),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(160.dp)
+                    .padding(bottom = 24.dp)
+            )
+
+            // TEXTO CENTRADO
             Text(
                 text = "Conquest your friends step by step",
                 color = Color.White,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(bottom = 48.dp)
+                modifier = Modifier.padding(bottom = 40.dp)
             )
 
+            // BOTÃO JOIN
             Button(
                 onClick = onJoinClick,
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF204E3A)),
@@ -73,6 +79,7 @@ fun LoadScreen(onJoinClick: () -> Unit = {}, onLoginClick: () -> Unit = {}) {
 
             Spacer(Modifier.height(16.dp))
 
+            // BOTÃO LOGIN
             OutlinedButton(
                 onClick = onLoginClick,
                 border = BorderStroke(1.dp, Color.White),

@@ -1,7 +1,10 @@
 package com.example.runapp.screens
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,26 +18,69 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 fun MapScreen(onBack: () -> Unit) {
 
+    val context = LocalContext.current
+
+    var hasLocationPermission by remember {
+        mutableStateOf(
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        )
+    }
+
+    // Launcher para pedir a permissão em runtime
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        hasLocationPermission = granted
+    }
+
+    // Pede a permissão quando o ecrã abre (se ainda não tiver)
+    LaunchedEffect(Unit) {
+        if (!hasLocationPermission) {
+            permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+    }
+
+    // Posição inicial: Lisboa (só como default de arranque)
     val lisboa = LatLng(38.7223, -9.1393)
 
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(lisboa, 15f)
+    }
+
+    // Configuração do mapa dependendo da permissão
+    val uiSettings = remember(hasLocationPermission) {
+        MapUiSettings(
+            myLocationButtonEnabled = hasLocationPermission
+        )
+    }
+
+    val properties = remember(hasLocationPermission) {
+        MapProperties(
+            isMyLocationEnabled = hasLocationPermission
+        )
     }
 
     Scaffold { padding ->
@@ -44,10 +90,12 @@ fun MapScreen(onBack: () -> Unit) {
                 .padding(padding)
         ) {
 
-            // Mapa em fullscreen
+            // Mapa em fullscreen com localização real (ponto azul)
             GoogleMap(
                 modifier = Modifier.matchParentSize(),
-                cameraPositionState = cameraPositionState
+                cameraPositionState = cameraPositionState,
+                properties = properties,
+                uiSettings = uiSettings
             )
 
             // Top bar
@@ -100,7 +148,6 @@ private fun TopOverlay() {
             }
         }
 
-        // 👉 Removidas as barrinhas de progresso
         Spacer(modifier = Modifier.height(0.dp))
     }
 }
@@ -132,20 +179,18 @@ private fun BottomOverlay(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Botões grandes
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            // Botão START verde
             Surface(
                 modifier = Modifier.size(80.dp),
                 shape = CircleShape,
                 color = Color(0xFF204E3A),
                 tonalElevation = 6.dp,
-                onClick = { /* TODO start run */ }
+                onClick = { /*  */ }
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Icon(
@@ -163,7 +208,7 @@ private fun BottomOverlay(modifier: Modifier = Modifier) {
                 color = Color.White,
                 tonalElevation = 4.dp,
                 border = BorderStroke(2.dp, Color(0xFF222222)),
-                onClick = { /* TODO pause run */ }
+                onClick = { /* */ }
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
