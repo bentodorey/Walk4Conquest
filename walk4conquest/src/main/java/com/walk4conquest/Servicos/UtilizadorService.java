@@ -7,24 +7,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UtilizadorService {
 
     private final UtilizadorRepository repo;
     private final PasswordEncoder passwordEncoder;
-    public List<Utilizador> findAll() {
-    return repo.findAll();
-}
-
 
     public UtilizadorService(UtilizadorRepository repo, PasswordEncoder passwordEncoder) {
         this.repo = repo;
         this.passwordEncoder = passwordEncoder;
     }
 
-
+    public List<Utilizador> findAll() {
+        return repo.findAll();
+    }
 
     public Utilizador findById(Long id) {
         return repo.findById(id).orElse(null);
@@ -49,30 +46,40 @@ public class UtilizadorService {
             throw new RuntimeException("Email já registado.");
         }
 
-        // 2) Criar novo utilizador
+        // 2) Verificar se o username já existe
+        if (repo.existsByUsername(dto.getUsername())) {
+            throw new RuntimeException("Username já registado.");
+        }
+
+        // 3) Criar novo utilizador
         Utilizador u = new Utilizador();
         u.setNome(dto.getNome());
+        u.setUsername(dto.getUsername());  // ADICIONAR USERNAME
         u.setEmail(dto.getEmail());
 
-        // 3) Encriptar password
+        // 4) Encriptar password
         String hash = passwordEncoder.encode(dto.getPassword());
         u.setPassword(hash);
 
-        // 4) Preencher campos opcionais
+        // 5) Preencher campos opcionais
         u.setSexo(dto.getSexo());
         u.setAlturaCm(dto.getAlturaCm());
         u.setPesoKg(dto.getPesoKg());
         u.setDataNascimento(dto.getDataNascimento());
 
-        // 5) Guardar
+        // 6) Guardar
         return repo.save(u);
     }
 
     // --------------------------
-    // LOGIN AUXILIAR
+    // MÉTODOS AUXILIARES
     // --------------------------
 
     public Utilizador findByEmail(String email) {
         return repo.findByEmail(email);
+    }
+
+    public Utilizador findByUsername(String username) {
+        return repo.findByUsername(username);
     }
 }

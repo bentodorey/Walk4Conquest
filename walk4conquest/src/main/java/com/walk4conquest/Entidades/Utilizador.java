@@ -18,12 +18,15 @@ public class Utilizador implements UserDetails {
     private String nome;
 
     @Column(unique = true)
+    private String username;  // NOVO CAMPO
+
+    @Column(unique = true)
     private String email;
 
     private String password;
 
     // ------------------------
-    // NOVOS CAMPOS
+    // CAMPOS ADICIONAIS
     // ------------------------
 
     private String sexo;
@@ -64,7 +67,11 @@ public class Utilizador implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email; // username = email
+        return username;  // AGORA RETORNA O USERNAME
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -112,7 +119,7 @@ public class Utilizador implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList(); // sem roles por enquanto
+        return Collections.emptyList();
     }
 
     @Override
@@ -127,4 +134,3 @@ public class Utilizador implements UserDetails {
     @Override
     public boolean isEnabled() { return true; }
 }
-
