@@ -24,7 +24,7 @@ fun SignupScreen(
 ) {
     var nome by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }   // só visual por enquanto
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     val authViewModel: AuthViewModel = viewModel()
@@ -47,6 +47,7 @@ fun SignupScreen(
                 .padding(24.dp)
         ) {
 
+            // Top bar
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -69,6 +70,7 @@ fun SignupScreen(
 
             Spacer(Modifier.height(24.dp))
 
+            // NOME
             OutlinedTextField(
                 value = nome,
                 onValueChange = { nome = it },
@@ -79,6 +81,7 @@ fun SignupScreen(
 
             Spacer(Modifier.height(12.dp))
 
+            // USERNAME
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it },
@@ -89,6 +92,7 @@ fun SignupScreen(
 
             Spacer(Modifier.height(12.dp))
 
+            // EMAIL
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -98,6 +102,7 @@ fun SignupScreen(
 
             Spacer(Modifier.height(12.dp))
 
+            // PASSWORD
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -109,6 +114,7 @@ fun SignupScreen(
 
             Spacer(Modifier.height(24.dp))
 
+            // BOTÃO CREATE ACCOUNT
             Button(
                 onClick = {
                     if (nome.isNotEmpty() &&
@@ -117,9 +123,10 @@ fun SignupScreen(
                         password.isNotEmpty() &&
                         !uiState.isLoading
                     ) {
-                        // 👉 Backend só recebe username + password
                         authViewModel.register(
+                            nome = nome,
                             username = username,
+                            email = email,
                             password = password
                         )
                     }
@@ -140,6 +147,7 @@ fun SignupScreen(
                 }
             }
 
+            // ERRO
             uiState.error?.let { msg ->
                 Spacer(Modifier.height(12.dp))
                 Text(

@@ -17,15 +17,17 @@ data class AuthUiState(
 
 class AuthViewModel : ViewModel() {
 
-    // ---- LOGIN ----
+    // ---- LOGIN STATE ----
     private val _loginState = MutableStateFlow(AuthUiState())
     val loginState: StateFlow<AuthUiState> = _loginState
 
-    // ---- REGISTO ----
+    // ---- REGISTER STATE ----
     private val _registerState = MutableStateFlow(AuthUiState())
     val registerState: StateFlow<AuthUiState> = _registerState
 
-
+    // ----------------------------------------------------------
+    // LOGIN
+    // ----------------------------------------------------------
     fun login(username: String, password: String) {
         viewModelScope.launch {
             _loginState.value = AuthUiState(isLoading = true)
@@ -39,8 +41,8 @@ class AuthViewModel : ViewModel() {
                 )
 
                 if (response.isSuccessful && response.body() != null) {
+                    // Podes guardar o token se quiseres
                     val token = response.body()!!.token
-                    // TODO: se quiseres, guarda o token em SharedPreferences aqui
 
                     _loginState.value = AuthUiState(
                         isLoading = false,
@@ -54,6 +56,7 @@ class AuthViewModel : ViewModel() {
                         error = "Credenciais inválidas (${response.code()})"
                     )
                 }
+
             } catch (e: Exception) {
                 _loginState.value = AuthUiState(
                     isLoading = false,
@@ -64,18 +67,19 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    /**
-     * Registo com username + password
-     * Chama POST /auth/register (RegisterRequest) e espera apenas código HTTP
-     */
-    fun register(username: String, password: String) {
+    // ----------------------------------------------------------
+    // REGISTO
+    // ----------------------------------------------------------
+    fun register(nome: String, username: String, email: String, password: String) {
         viewModelScope.launch {
             _registerState.value = AuthUiState(isLoading = true)
 
             try {
                 val response = RetrofitClient.api.register(
                     RegisterRequest(
+                        nome = nome,
                         username = username,
+                        email = email,
                         password = password
                     )
                 )
@@ -83,8 +87,7 @@ class AuthViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     _registerState.value = AuthUiState(
                         isLoading = false,
-                        success = true,
-                        error = null
+                        success = true
                     )
                 } else {
                     _registerState.value = AuthUiState(
@@ -93,6 +96,7 @@ class AuthViewModel : ViewModel() {
                         error = "Erro ao criar conta (${response.code()})"
                     )
                 }
+
             } catch (e: Exception) {
                 _registerState.value = AuthUiState(
                     isLoading = false,
