@@ -1,26 +1,18 @@
 package com.example.runapp.network
 
-class ApiModelspackage
-
+// LOGIN  (igual ao LoginRequest.java do backend)
 data class LoginRequest(
-    val email: String,
+    val username: String,
     val password: String
 )
 
+// o backend devolve um TokenResponse { "token": "..." }
 data class LoginResponse(
-    val token: String // igual ao que o backend devolve
+    val token: String
 )
 
-// REGISTO
+// REGISTO  (igual ao RegisterRequest.java do backend)
 data class RegisterRequest(
-    val nome: String,
     val username: String,
-    val email: String,
-    val password: String,
-    val sexo: String? = null,
-    val alturaCm: Double? = null,
-    val pesoKg: Double? = null,
-    val dataNascimento: String? = null // "2000-01-01"
+    val password: String
 )
-{
-}

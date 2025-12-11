@@ -13,7 +13,6 @@ android {
     defaultConfig {
         applicationId = "com.example.runapp"
         minSdk = 24
-
         targetSdk = 36
 
         versionCode = 1
@@ -47,6 +46,7 @@ android {
 }
 
 dependencies {
+    // Core Android / Compose
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -55,15 +55,26 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation(libs.androidx.navigation.compose)
 
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    // ViewModel (para AuthViewModel, viewModelScope, viewModel() em Compose)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Ícones extra do Material
     implementation("androidx.compose.material:material-icons-extended")
 
+    // Google Maps
     implementation("com.google.android.gms:play-services-maps:19.2.0")
     implementation("com.google.maps.android:maps-compose:6.4.1")
 
+    // Outros
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
 
