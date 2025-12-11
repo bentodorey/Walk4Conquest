@@ -1,231 +1,329 @@
-Universidade - Iade Faculdade de Design, Tecnologia e Comunicação da Universidade curricular  
-Unidades Curriculares - Projeto Desenvolvimento Móvel , Programação Mobile , Programação Orientada por Objetos  , Bases de Dados , Competências Comunicacionais , Matemática Discreta  
-Elementos do Grupo  
-Bento d'Orey – Nº 20241233  
-Martim Fonseca – Nº 20241218  
-Vasco Sousa Pinto – Nº 20231182  
-Miguel Croca - Nº 20240408  
----
-
-
+# Walk4Conquest – Relatório Final do Projeto
 
 ![w4c](https://github.com/user-attachments/assets/906fd288-0a87-4b30-97fa-662df0413153)
 
 
+## 1. Identificação
+
+**Universidade:** Iade Faculdade de Design, Tecnologia e Comunicação da Universidade curricular    
+**Curso:** Engenharia Informática  
+**Unidades Curriculares Envolvidas:** Projeto Desenvolvimento Móvel , Programação Mobile , Programação Orientada por Objetos  , Bases de Dados , Competências Comunicacionais , Matemática Discreta 
+
+**Elementos do Grupo:**
+
+- Bento d'Orey      – nº 20241233
+- Martim Fonseca    – nº 20241218
+- Vasco Sousa Pinto – nº 20231182
+- Miguel Croca      – nº 20240408
+
+**Nome do Projeto:** Walk4Conquest  
+**Repositório GitHub:** https://github.com/bentodorey/Walk4Conquest  
+
+---
+
+## 2. Quadro de Tarefas e Contributo dos Elementos
+
+| Tarefa Principal                                 |   Bento    |   Martim   |   Vasco    |   Miguel   |
+|--------------------------------------------------|-----------:|-----------:|-----------:|-----------:|
+| Análise de requisitos                            |    25%     |    25%     |    25%     |    25%     |
+| Desenho de casos de utilização                   |    50%     |     0%     |    50%     |     0%     |
+| Modelação de dados / diagrama de classes         |     0%     |    50%     |     0%     |    50%     |
+| Desenvolvimento da app (frontend)                |    70%     |    10%     |    20%     |    10%     |
+| Desenvolvimento backend / serviços REST          |    20%     |    40%     |     0%     |    40%     |
+| Integração com APIs externas                     |    40%     |    40%     |     0%     |    20%     |
+| Testes e correção de erros                       |    30%     |    30%     |    20%     |    20%     |
+| Documentação técnica                             |     0%     |    40%     |    30%     |    30%     |
+| Manual do utilizador                             |    20%     |    40%     |    40%     |     0%     |
+| Gestão do projeto / planeamento                  |    30%     |    30%     |    10%     |    30%     |
 
 
-Proposta do Projeto
-Walk 4 Conquest (W4C)
 
-Link do Repositório GitHub: https://github.com/Miguelcroca/Projeto-Walk-4-Conquest-/blob/main/README.md
+---
 
-_________________________________________________________________
+## 3. Breve Descrição da App e do Problema
 
-Fitness · Gamificação · Competição · Saúde · GPS · Comunidade
-_________________________________________________________________
+O **Walk4Conquest** é uma aplicação móvel que tem como objetivo motivar os utilizadores a correr enquanto exploram mais as suas areas e competem com os seus proximos, levando a competitividade humana a uma life style saudável.
 
-## 1. Breve Descrição da App e do Problema que Pretende Resolver
-
-A Walk 4 Conquest (W4C) é uma aplicação móvel que promove o fitness com um aspeto social e competitivo.  
 O objetivo é criar uma app que incentive a prática de exercício físico, transformando percursos em conquistas competitivas e sociais, promovendo saúde, diversão e espírito de jogo.
 
 Esta ideia surgiu da observação de que muitas pessoas desejam praticar exercício, mas não têm motivação suficiente ou necessitam de incentivo externo, como um treinador ou atividades em grupo. Assim, a Walk 4 Conquest propõe um novo meio de incentivo, recorrendo ao prazer da conquista e ao espírito competitivo individual.
 
 A aplicação permite ao utilizador definir a sua “base” (ex: casa, escritório, escola) e iniciar um percurso. Ao regressar à base, a corrida é dada como concluída e o trajeto é marcado no mapa. Surge então a componente competitiva: cada território conquistado pode ser partilhado, e outros utilizadores podem tentar reconquistá-lo, criando uma dinâmica contínua de desafios.
+A Walk 4 Conquest (W4C) é uma aplicação móvel que promove o fitness com um aspeto social e competitivo.
 
+O problema identificado é falta de motivação para atividade física, os nossos utilizadores até já podem ter tentado outras apps de corrida, mas a ausência de interação social fez com que a motivação para as continuar a usra no long term, morresse cedo.  
+A app procura resolver este problema através da conquista de territórios, recompensas, rankings, tudo entre as pessoas que tu aceitares.
 
+---
 
-![poster w4](https://github.com/user-attachments/assets/a9099476-b4ff-4c67-8588-b87ae5fb2493)
+## 4. Objetivos e Motivação
 
+Os objetivos principais do projeto são:
 
-
-_________________________________________________________________
-
-
-## 2. Objetivos e Motivação
-
-A Walk 4 Conquest pretende:
-•⁠  ⁠Incentivar hábitos saudáveis de forma lúdica e competitiva;
-•⁠  ⁠Promover a socialização através de partilhas e desafios;
-•⁠  ⁠Criar um sistema de “territórios conquistados” para aumentar o envolvimento dos utilizadores;
-•⁠  ⁠Desenvolver um protótipo funcional para validação com utilizadores reais.
-
-_________________________________________________________________
-
-
-## 3. Público-Alvo
-
-O público-alvo são jovens e adultos entre 18 e 40 anos, ativos, que praticam corrida ou caminhada e utilizam apps móveis para registar atividade física. Valorizam o exercício, a competição saudável e o convívio digital através de plataformas sociais.
-
-_________________________________________________________________
-
-
-## 4. Pesquisa de Mercado
-
-Strava  Registo GPS, estatísticas, rede social ; Foco competitivo, mas sem conquistas territoriais 
-Nike Run Club  Treinos guiados, partilhas sociais ; Menos personalização e desafios entre utilizadores 
-Zombies Run!  Gamificação com storytelling ; Limitado a um tipo de desafio, sem componente territorial 
-INTVL  Corridas competitivas por território;  partilhas sociais. Conceito inovador, mas vulnerável a fraudes e elevado consumo de bateria; limitações de privacidade. 
-
-_________________________________________________________________
-
-
-## 5. Guiões de Teste (Casos de Utilização)
-
-Caso 1 – Core: Conquista de Território
-1.⁠ ⁠O utilizador cria conta e autentica-se.  
-2.⁠ ⁠Define a sua base (casa, escola, escritório).  
-3.⁠ ⁠Inicia percurso com o GPS ativo.  
-4.⁠ ⁠Percorre trajeto e regressa à base.  
-5.⁠ ⁠A app marca o percurso e regista o território conquistado.  
-6.⁠ ⁠O utilizador recebe pontos ou estatísticas da conquista.
-Caso 2 – Partilha Social
-1.⁠ ⁠Após conquistar território, o utilizador seleciona “Partilhar”.  
-2.⁠ ⁠Escolhe se quer partilhar com amigos, público ou grupo.  
-3.⁠ ⁠A app publica o trajeto e resultados.  
-4.⁠ ⁠Amigos podem comentar ou desafiar o percurso.
-
-Caso 3 – Competição entre Utilizadores
-1.⁠ ⁠O utilizador visualiza no mapa territórios conquistados por outros.  
-2.⁠ ⁠Seleciona um território para “reconquistar”.  
-3.⁠ ⁠Faz um percurso maior até ao mesmo local.  
-4.⁠ ⁠Se o trajeto for superior, o território muda de dono.  
-5.⁠ ⁠A app atualiza o ranking e notifica ambos os utilizadores.
-
-_________________________________________________________________
-
-## 6. Descrição da Solução a Implementar
-
-
-A aplicação permitirá:
-•⁠  ⁠Criação e autenticação da conta;
-•⁠  ⁠Definição da base pessoal;
-•⁠  ⁠Registo de percursos via GPS;
-•⁠  ⁠Criação de territórios conquistados;
-•⁠  ⁠Partilhas sociais e sistema de ranking;
-•⁠  ⁠Funcionalidade de competição territorial.
-
-Enquadramento nas Unidades Curriculares
-| Unidade Curricular | Contributo |
-|--------------------|------------|
-| Programação Móvel | Desenvolvimento da app (frontend e integração GPS) |
-| Engenharia de Software | Levantamento de requisitos e modelo de domínio |
-| Gestão de Projetos | Planeamento, Gantt e monitorização |
-| Base de Dados | Estrutura de dados de utilizadores, percursos e territórios |
-| Interface e UX | Design da aplicação e protótipo interativo |
-
-Requisitos Técnicos (provisórios)
-
-•⁠  ⁠O sistema deve permitir criar conta e autenticação.  
-•⁠  ⁠O utilizador deve poder definir a sua base.  
-•⁠  ⁠A app deve registar percursos via GPS.  
-•⁠  ⁠Cada percurso deve ser convertido num território.  
-•⁠  ⁠Outros utilizadores podem tentar reconquistá-lo.  
-•⁠  ⁠O utilizador deve poder partilhar conquistas.  
-•⁠  ⁠Deve existir um ranking de conquistas.
-
-•⁠  ⁠Desempenho: registo GPS em tempo real com baixo consumo de bateria.  
-•⁠  ⁠Segurança: proteção de dados pessoais e localização.  
-•⁠  ⁠Escalabilidade: suporte para grande número de utilizadores.  
-•⁠  ⁠Confiabilidade: disponibilidade mínima de 99%.  
-•⁠  ⁠Privacidade: controlo sobre visibilidade das conquistas.
-
-Arquitetura da Solução (provisória)
-
-
-Componentes principais:
-•⁠  ⁠App móvel (Frontend);
-•⁠  ⁠Servidor / API REST (Backend);
-•⁠  ⁠Base de dados (armazenamento de utilizadores, percursos e territórios);
-•⁠  ⁠Serviço de mapas e GPS (Google Maps API).
-
-Tecnologias a Utilizar (provisórias)
-
-| Camada | Tecnologia sugerida |
-|--------|---------------------|
-| Mobile | Flutter / React Native |
-| Backend | Node.js / Firebase |
-| Base de Dados | Firestore / MySQL |
-| Mapas e GPS | Google Maps API |
-| Autenticação | Firebase Auth |
-
-
-
-![mockup](https://github.com/user-attachments/assets/5fc6c53e-868d-4264-b439-f95f348f289f)
+1. Desenvolver uma aplicação móvel funcional que permita fazer exercício sem desistir.
+2. Integrar funcionalidades de geolocalização e mapa para suportar percentagens das áreas conquistadas, registo de percursos
+3. Implementar um sistema de gamificação que incentive o utilizador a puxar amigos, familia e até colegas de trabalho a correrem e não o fazerem sozinhos.
+4. Praticar metodologias de trabalho em grupo, planeamento e versionamento de código utilizando Git/GitHub.
 
 
 ---
 
-## 7. Guiões e personas
+## 5. Identificação do Público‑Alvo
 
-1.⁠ ⁠Joana Martins – A Iniciante 
+O público‑alvo principal são:
 
-Idade: 27 anos
-Profissão: Designer gráfica
-Nível de corrida: Principiante
-Objetivo: Perder peso e criar rotina de exercício
-Motivação: Sentir-se mais saudável e com energia
-Frustrações: Falta de consistência, dificuldade em sentir-se motivada
-Necessidades: Planos simples, feedback motivador
-Comportamento: Corre 2-3x por semana, gosta de apps intuitivas e com notificações
-
-
-2.⁠ ⁠Miguel Pereira – O Explorador
-
-Idade: 34 anos
-Profissão: Engenheiro informático
-Nível de corrida: Intermédio / Avançado
-Objetivo: Descubrir vistas e zonas que até então ainda não foi
-Motivação: Superar-se e comparar desempenho com amigos
-Frustrações: Já não sabe por aonde ainda não esteve
-Necessidades: mapa com os sitios onde já andou
-Comportamento: Corre 4-5x por semana, participa em provas por todo Portugal
-
-
-3.⁠ ⁠Sofia Almeida – A Social Runner
-
-Idade: 22 anos
-Profissão: Estudante universitária
-Nível de corrida: Intermédio
-Objetivo: Manter a forma e socializar
-Motivação: Correr com amigos e partilhar resultados
-Frustrações: Falta de motivação sozinha, horários incompatíveis
-Necessidades: Funções sociais, eventos de grupo e motivação gamificada
-Comportamento: Corre 2x por semana, gosta de apps com comunidades
-
-
-4.⁠ ⁠Carlos Ramos – O Veterano da Corrida
-Idade: 52 anos
-Profissão: Professor
-Nível de corrida: Experiente
-Objetivo: Manter a forma física e evitar lesões zonas com grandes elevações
-Motivação: Saúde e bem-estar
-Frustrações: Lesões recorrentes, apps confusas que mandam por sitios estranhos
-Necessidades: Interface simples
-Comportamento: Corre 3x por semana, valoriza apps simples e fiáveis
+- Estudantes e jovens adultos entre 18-40 anos, com acesso a smartphone e interesse em jogos casuais e atividade física.
+- Utilizadores que já utilizam apps de exercício (ex.: contagem de passos) mas procuram uma componente competitiva.
+- Pessoas que vivem em zonas urbanas com facilidade de deslocação a pé.
+- Pessoas que não conseguem levar até ao fim 
 
 
 ---
 
+## 6. Pesquisa de Mercado / Aplicações Semelhantes
 
-## 8. Plano e Calendário
+Foram analisadas várias aplicações móveis com funcionalidades semelhantes ou comparáveis:
+
+- **Pokemon GO** – jogo de realidade aumentada baseado em geolocalização e conquista de pontos no mapa.  
+  Semelhanças: utilização de mapa, movimento físico do utilizador.  
+  Diferenças: foco em colecionar personagens, não em caminhadas estruturadas.
+
+- **Zombies, Run!** – aplicação que incentiva corrida/caminhada através de narrativa.  
+  Semelhanças: motivação para exercício usando elementos de jogo.  
+  Diferenças: foco em história e áudio, não em conquista de território.
+
+- **Google Fit / Samsung Health** – apps de monitorização de atividade física.  
+  Semelhanças: registo de passos/atividade.  
+  Diferenças: ausência de forte componente de gamificação e competição territorial.
+
+A partir desta análise concluiu‑se que há espaço para uma solução que combine **monitorização de atividade física** com **conquista de áreas no mapa** e **competição direta entre utilizadores**, abordagem adotada pelo Walk4Conquest.
+
+---
+
+## 7. Descrição da Solução Implementada
+
+### i. Descrição Genérica da Solução
+
+O Walk4Conquest é uma aplicação Android que permite ao utilizador:
+
+- Registar corridas utilizando geolocalização.  
+- Visualizar um mapa com zonas/territórios.  
+- Conquistar áreas ao deslocar‑se fisicamente até elas.  
+- Competir com outros jogadores através de pontos, conquistas ou rankings.  
+- Consultar estatísticas básicas da sua atividade.
 
 
-<img width="813" height="354" alt="image" src="https://github.com/user-attachments/assets/9b089774-95ab-47e3-8b45-7a14b1ecae1b" />
+---
+
+### ii. Enquadramento nas Diversas Unidades Curriculares
+
+- **UC 1 – <<Nome>>:** aplicação de conceitos de análise de requisitos, casos de utilização e modelação UML.  
+- **UC 2 – <<Nome>>:** desenvolvimento da interface móvel, navegação entre ecrãs e experiência do utilizador.  
+- **UC 3 – <<Nome>>:** implementação de serviços web / REST, consumo de APIs externas e gestão de dados persistentes.  
+- **UC 4 – <<Nome>>:** planeamento, gestão de projeto, utilização de ferramentas de controlo de versões (Git).  
+
+(Adaptar às UCs reais do teu curso.)
+
+---
+
+### iii. Requisitos Técnicos Finais
+
+Principais requisitos técnicos implementados:
+
+- **RF1 – Registo e autenticação de utilizadores** via <<método: email/password, OAuth, etc.>>.  
+- **RF2 – Registo de caminhadas** com recurso ao GPS do dispositivo.  
+- **RF3 – Visualização de mapa interativo** com <<biblioteca ou serviço usado: Google Maps, Mapbox, etc.>>.  
+- **RF4 – Sistema de conquista de territórios** baseado em <<ex.: polígonos no mapa, grelha de células, pontos de interesse>>.  
+- **RF5 – Rankings / pontuações entre utilizadores.**  
+- **RF6 – Consulta de histórico de conquistas e estatísticas.**
+
+---
+
+### iv. Arquitetura da Solução
+
+A arquitetura segue uma abordagem <<ex.: cliente‑servidor>>:
+
+- **Camada de Apresentação (App Móvel):**
+  - Ecrãs de login/registro, mapa, perfil, rankings, etc.
+  - Implementação de lógica de interação com o utilizador.
+
+- **Camada de Lógica de Negócio:**
+  - Cálculo de pontos e conquistas.
+  - Regras de atualização de territórios e rankings.
+  - Validação de dados recebidos.
+
+- **Camada de Dados:**
+  - <<Descrever: BD local (SQLite/Room), BD remota (MySQL/PostgreSQL/Firebase), etc.>>
+  - Modelos de dados para utilizadores, sessões de caminhada, territórios, conquistas, etc.
+
+- **Serviços Externos:**
+  - API de mapas / geolocalização.
+  - Outros serviços que utilizem (ex.: autenticação externa).
+
+(Incluir no relatório final o diagrama de arquitetura que já tiverem desenhado.)
+
+---
+
+### v. Tecnologias Utilizadas
+
+- Linguagem de programação: Kotlin, Java  
+- Plataforma móvel: Android Studio  
+- Frameworks / bibliotecas:
+  - <<Ex.: Android Jetpack (ViewModel, LiveData, Room)>>  
+  - <<Ex.: Retrofit / Volley para chamadas REST>>  
+  - <<Ex.: Google Maps SDK / Mapbox>>  
+- Base de dados: MySQL 
+- Serviços web / backend: <<Node.js, Spring Boot, Firebase Functions, etc., ou “não aplicável” se não tiverem>>  
+- Ferramentas de apoio: Git/GitHub, Figma.
+
+
+---
+
+### vi. Versão Atualizada dos Casos de Utilização
+
+Listagem resumida (os diagramas devem ser anexados como imagens):
+
+- **UC1 – Registar utilizador**  
+- **UC2 – Iniciar sessão**  
+- **UC3 – Iniciar caminhada**  
+- **UC4 – Visualizar mapa e territórios**  
+- **UC5 – Conquistar território durante a caminhada**  
+- **UC6 – Consultar perfil e estatísticas**  
+- **UC7 – Consultar ranking / leaderboard**  
+- **UC8 – Terminar sessão**
+
+
+---
+
+### vii. Versão Atualizada do Diagrama de Classes
+
+Descrever brevemente as principais classes:
+
+- `User` – representa o utilizador (id, nome, email, pontuação, etc.).  
+- `Territory` – representa cada área conquistável (id, localização, proprietário atual, etc.).  
+- `WalkSession` – representa uma sessão de caminhada (data, duração, distância, utilizador associado).  
+- `Conquest` – regista conquistas efetuadas numa sessão.  
+- Outras classes relevantes ligadas à interface, serviços, repositórios de dados, etc.
+
+(O diagrama de classes completo deve ser incluído como figura ou anexo.)
+
+---
+
+### viii. Versão Atualizada do Dicionário de Dados (Modelo ER)
+
+Incluir:
+
+- Tabela/Entidade `User` – campos, tipos, chaves primárias/estrangeiras.  
+- Tabela `Territory`.  
+- Tabela `WalkSession`.  
+- Tabela `Conquest`.  
+
+Para cada campo, descrever:
+
+- Nome  
+- Tipo de dados  
+- Tamanho  
+- Restrição (PK, FK, NOT NULL, etc.)  
+- Descrição
+
+(O modelo ER gráfico deve ser anexado; aqui fica a descrição textual.)
+
+---
+
+### ix. Versão Atualizada do Guia de Dados
+
+Explicar como os dados são utilizados e mantidos:
+
+- Política de criação/atualização de utilizadores.  
+- Regras para registo de novas sessões de caminhada.  
+- Regras de cálculo e atualização de pontos e territórios.  
+- Estratégia de backup e recuperação (se aplicável).  
+- Tratamento de dados pessoais e preocupação com privacidade (armazenamento mínimo, encriptação, etc., se usarem).
+
+---
+
+### x. Link para Documentação REST
+
+Caso exista API/serviço REST, indicar:
+
+- URL base da API.  
+- Endpoints principais (`/login`, `/users`, `/territories`, `/walks`, etc.).  
+- Métodos suportados (GET/POST/PUT/DELETE).  
+- Formato de dados (JSON, etc.).
+
+Exemplo de referência no relatório:
+
+> A documentação detalhada da API REST encontra‑se disponível em:  
+> <<URL da documentação no GitHub Wiki, Postman Collection, Swagger/OpenAPI, etc.>>
 
 
 
 ---
 
-## 9. Conclusão
+### xi. Link para o Manual do Utilizador
 
-O projeto Walk 4 Conquest pretende combinar a componente de jogo, fitness e socialização através de uma abordagem competitiva e divertida. O objetivo principal é criar um protótipo funcional que permita testar a motivação gerada pela conquista de territórios e interação entre utilizadores. A aplicação tem como objetivo aumentar a prática de atividade física de forma sustentável e envolvente.
+> O Manual do Utilizador, contendo descrições passo a passo dos ecrãs e funcionalidades da aplicação, encontra‑se disponível em:  
+> <<URL para ficheiro `MANUAL_UTILIZADOR.md` ou PDF no repositório GitHub>>.
+
 
 ---
 
-## 10. Bibliografia
+## 8. Planeamento e Calendarização Final
 
-Bump (aplicação)  
-ChatGPT (site)  
-https://www.jaba-recordati.pt/pt/transact-lat/dicas-de-lifestyle/atividade-fisica-lifestyle-18-descobre-as-10-melhores-apps-de-fitness  
-Territorial.io (aplicação)
+Foi utilizado um planeamento dividido em fases principais:
+
+1. **Fase 1 – Análise e Especificação (Semanas 1–2)**  
+   - Recolha de requisitos  
+   - Definição de casos de utilização  
+   - Pesquisa de mercado
+
+2. **Fase 2 – Desenho e Modelação (Semanas 3–5)**  
+   - Modelo de dados (ER)  
+   - Diagrama de classes  
+   - Protótipo de interfaces
+
+3. **Fase 3 – Implementação (Semanas 5–11)**  
+   - Desenvolvimento da app móvel  
+   - Integração de mapas e geolocalização  
+   - Implementação de lógica de jogo e conquistas  
+   - Desenvolvimento / integração de backend (se existir)
+
+4. **Fase 4 – Testes e Integração (Semanas 11–14)**  
+   - Testes funcionais  
+   - Correção de bugs  
+   - Otimizações de desempenho
+
+5. **Fase 5 – Documentação e Entrega (Semana 15)**  
+   - Relatório final  
+   - Manual do utilizador  
+   - Preparação da apresentação
+
+### Quadro Resumo de Planeamento (tipo Gantt simplificado)
+
+| Fase / Semana                  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9\10 | 11\12 | 13\14 | 15 | 
+|--------------------------------|---|---|---|---|---|---|---|---|------|-------|-------|----|
+| Análise e Especificação        | █ | █ |   |   |   |   |   |   |      |       |       |    |
+| Desenho e Modelação            |   |   | █ | █ | █ |   |   |   |      |       |       |    |
+| Implementação App              |   |   |   |   | █ | █ | █ | █ | █ █  |  █    |       |    |
+| Testes e Integração            |   |   |   |   |   |   |   |   |      |  █ █  |  █  █ |    |
+| Documentação e Entrega         |   |   |   |   |   |   |   |   |      |       |       |  █ |
+
+
+---
+
+## 9. Conclusões (opcional, mas normalmente útil)
+
+- Resumo dos resultados alcançados.  
+- Principais dificuldades técnicas e organizacionais.  
+- Possíveis melhorias e trabalho futuro (novas funcionalidades, otimizações, etc.).  
+
+---
+
+## 10. Bibliografia e Referências
+
+Listar em formato consistente (APA, IEEE ou outro):
+
+- Documentação oficial das bibliotecas usadas.  
+- Artigos, livros ou páginas web relevantes para a conceção do projeto.  
+- Tutoriais que tenham sido particularmente importantes.
+
