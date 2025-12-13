@@ -15,20 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.runapp.R
-
-data class UserProfile(
-    val name: String,
-    val username: String,
-    val email: String,
-    val totalDistanceKm: Double,
-    val totalRuns: Int,
-    val avgPace: String
-)
+import com.example.runapp.network.UserProfileResponse
+import com.example.runapp.viewmodels.ProfileViewModel
 
 @Composable
 fun ProfileScreen(
@@ -38,7 +30,6 @@ fun ProfileScreen(
     val profileViewModel: ProfileViewModel = viewModel()
     val profileState by profileViewModel.profileState.collectAsState()
 
-    // Busca os dados quando o ecrã abre
     LaunchedEffect(Unit) {
         profileViewModel.loadUserProfile(context)
     }
@@ -49,7 +40,6 @@ fun ProfileScreen(
     ) {
         when {
             profileState.isLoading -> {
-                // Loading
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -58,7 +48,6 @@ fun ProfileScreen(
                 }
             }
             profileState.error != null -> {
-                // Erro
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -86,7 +75,6 @@ fun ProfileScreen(
                 }
             }
             profileState.profile != null -> {
-                // Dados carregados
                 ProfileContent(
                     profile = profileState.profile!!,
                     onBack = onBack
@@ -98,7 +86,7 @@ fun ProfileScreen(
 
 @Composable
 private fun ProfileContent(
-    profile: UserProfile,
+    profile: UserProfileResponse,
     onBack: () -> Unit
 ) {
     Column(
@@ -106,8 +94,6 @@ private fun ProfileContent(
             .fillMaxSize()
             .padding(24.dp)
     ) {
-
-        // TOP BAR
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -119,9 +105,7 @@ private fun ProfileContent(
                     tint = Color(0xFF204E3A)
                 )
             }
-
             Spacer(modifier = Modifier.width(8.dp))
-
             Text(
                 text = "Profile",
                 fontSize = 22.sp,
@@ -131,14 +115,10 @@ private fun ProfileContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // LOGO + AVATAR
         Column(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            // Logo da app
             Image(
                 painter = painterResource(id = R.drawable.logonoback),
                 contentDescription = "Logo",
@@ -147,7 +127,6 @@ private fun ProfileContent(
                     .padding(bottom = 12.dp)
             )
 
-            // Avatar simples com iniciais
             Surface(
                 shape = CircleShape,
                 color = Color(0xFF204E3A),
@@ -155,10 +134,10 @@ private fun ProfileContent(
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Text(
-                        text = profile.name
+                        text = profile.nome
                             .split(" ")
                             .take(2)
-                            .joinToString("") { it.first().uppercase() },
+                            .joinToString("") { it.firstOrNull()?.uppercase() ?: "" },
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                         fontSize = 22.sp
@@ -167,21 +146,17 @@ private fun ProfileContent(
             }
 
             Spacer(modifier = Modifier.height(8.dp))
-
             Text(
-                text = profile.name,
+                text = profile.nome,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold
             )
-
             Text(
                 text = "@${profile.username}",
                 fontSize = 14.sp,
                 color = Color.Gray
             )
-
             Spacer(modifier = Modifier.height(4.dp))
-
             Text(
                 text = profile.email,
                 fontSize = 13.sp,
@@ -191,7 +166,6 @@ private fun ProfileContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // CARD PRINCIPAL COM STATS
         Surface(
             shape = RoundedCornerShape(20.dp),
             color = Color.White,
@@ -203,30 +177,27 @@ private fun ProfileContent(
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp, vertical = 16.dp)
             ) {
-
                 Text(
                     text = "Running Stats",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp
                 )
-
                 Spacer(modifier = Modifier.height(12.dp))
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     StatItemProfile(
                         label = "Total Distance",
-                        value = String.format("%.1f km", profile.totalDistanceKm)
+                        value = String.format("%.1f km", profile.totalDistanciaKm ?: 0.0)
                     )
                     StatItemProfile(
                         label = "Total Runs",
-                        value = profile.totalRuns.toString()
+                        value = (profile.totalCorridas ?: 0).toString()
                     )
                     StatItemProfile(
-                        label = "Avg Pace",
-                        value = profile.avgPace
+                        label = "Pontos",
+                        value = profile.pontos.toString()
                     )
                 }
             }
@@ -234,9 +205,8 @@ private fun ProfileContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // BOTÃO EDIT PROFILE
         Button(
-            onClick = { /* TODO: abrir ecrã de edição no futuro */ },
+            onClick = { },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
@@ -275,10 +245,4 @@ private fun StatItemProfile(label: String, value: String) {
             color = Color.Gray
         )
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ProfileScreenPreview() {
-    ProfileScreen(onBack = {})
 }

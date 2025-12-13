@@ -1,4 +1,4 @@
-package com.example.runapp.screens
+package com.example.runapp.viewmodels
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -30,7 +30,7 @@ class AuthViewModel : ViewModel() {
             _loginState.value = AuthUiState(isLoading = true)
 
             try {
-                val response = RetrofitClient.api.login(
+                val response = RetrofitClient.apiService.login(
                     LoginRequest(
                         usernameOrEmail = username,
                         password = password
@@ -71,7 +71,7 @@ class AuthViewModel : ViewModel() {
             _registerState.value = AuthUiState(isLoading = true)
 
             try {
-                val response = RetrofitClient.api.register(
+                val response = RetrofitClient.apiService.register(
                     RegisterRequest(
                         nome = nome,
                         username = username,

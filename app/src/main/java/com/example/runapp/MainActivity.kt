@@ -72,7 +72,6 @@ class MainActivity : ComponentActivity() {
                                     currentItem = DrawerItem.HOME,
                                     onHomeClick = {
                                         scope.launch { drawerState.close() }
-                                        // já estás na Home
                                     },
                                     onLeaderboardClick = {
                                         scope.launch { drawerState.close() }
@@ -84,11 +83,11 @@ class MainActivity : ComponentActivity() {
                                     },
                                     onHistoryClick = {
                                         scope.launch { drawerState.close() }
-                                        // TODO: quando tiveres ecrã de histórico
+                                        nav.navigate("history")
                                     },
                                     onSettingsClick = {
                                         scope.launch { drawerState.close() }
-                                        // TODO: quando tiveres ecrã de settings
+                                        nav.navigate("settings")
                                     },
                                     onLogoutClick = {
                                         scope.launch { drawerState.close() }
@@ -140,9 +139,11 @@ class MainActivity : ComponentActivity() {
                                     },
                                     onHistoryClick = {
                                         scope.launch { drawerState.close() }
+                                        nav.navigate("history")
                                     },
                                     onSettingsClick = {
                                         scope.launch { drawerState.close() }
+                                        nav.navigate("settings")
                                     },
                                     onLogoutClick = {
                                         scope.launch { drawerState.close() }
@@ -168,9 +169,46 @@ class MainActivity : ComponentActivity() {
                             onBack = { nav.popBackStack() }
                         )
                     }
+
+                    // PROFILE
                     composable("profile") {
                         ProfileScreen(
                             onBack = { nav.popBackStack() }
+                        )
+                    }
+
+                    // RUNNING (CORRIDA EM TEMPO REAL)
+                    composable("running") {
+                        RunningScreen(
+                            onBack = { nav.popBackStack() }
+                        )
+                    }
+
+                    // HISTORY (HISTÓRICO DE CORRIDAS)
+                    composable("history") {
+                        HistoryScreen(
+                            onBack = { nav.popBackStack() }
+                        )
+                    }
+
+                    // SETTINGS
+                    composable("settings") {
+                        SettingsScreen(
+                            onBack = { nav.popBackStack() },
+                            onEditProfile = { nav.navigate("edit_profile") },
+                            onDeleteAccount = {
+                                nav.navigate("start") {
+                                    popUpTo("start") { inclusive = true }
+                                }
+                            }
+                        )
+                    }
+
+                    // EDIT PROFILE
+                    composable("edit_profile") {
+                        EditProfileScreen(
+                            onBack = { nav.popBackStack() },
+                            onSaveSuccess = { nav.popBackStack() }
                         )
                     }
 

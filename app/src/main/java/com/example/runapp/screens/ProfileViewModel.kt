@@ -1,9 +1,10 @@
-package com.example.runapp.screens
+package com.example.runapp.viewmodels
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.runapp.network.RetrofitClient
+import com.example.runapp.network.UserProfileResponse
 import com.example.runapp.utils.TokenManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,13 +13,16 @@ import kotlinx.coroutines.launch
 data class ProfileUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
-    val profile: UserProfile? = null
+    val profile: UserProfileResponse? = null
 )
 
 class ProfileViewModel : ViewModel() {
 
     private val _profileState = MutableStateFlow(ProfileUiState())
     val profileState: StateFlow<ProfileUiState> = _profileState
+
+    private val _profile = MutableStateFlow<UserProfileResponse?>(null)
+    val profile: StateFlow<UserProfileResponse?> = _profile
 
     fun loadUserProfile(context: Context) {
         viewModelScope.launch {
@@ -35,30 +39,13 @@ class ProfileViewModel : ViewModel() {
                     return@launch
                 }
 
-                val response = RetrofitClient.api.getUserProfile("Bearer $token")
+                val response = RetrofitClient.apiService.getUserProfile("Bearer $token")
 
-                if (response.isSuccessful && response.body() != null) {
-                    val data = response.body()!!
-
-                    val profile = UserProfile(
-                        name = data.nome,
-                        username = data.username,
-                        email = data.email,
-                        totalDistanceKm = 0.0, // TODO: buscar do backend
-                        totalRuns = 0,          // TODO: buscar do backend
-                        avgPace = "0'00\" /km"  // TODO: buscar do backend
-                    )
-
-                    _profileState.value = ProfileUiState(
-                        isLoading = false,
-                        profile = profile
-                    )
-                } else {
-                    _profileState.value = ProfileUiState(
-                        isLoading = false,
-                        error = "Erro ao carregar perfil (${response.code()})"
-                    )
-                }
+                _profile.value = response
+                _profileState.value = ProfileUiState(
+                    isLoading = false,
+                    profile = response
+                )
 
             } catch (e: Exception) {
                 _profileState.value = ProfileUiState(
