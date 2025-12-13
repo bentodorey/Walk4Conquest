@@ -1,10 +1,12 @@
 package com.example.runapp.screens
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.runapp.network.LoginRequest
 import com.example.runapp.network.RegisterRequest
 import com.example.runapp.network.RetrofitClient
+import com.example.runapp.utils.TokenManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -17,32 +19,29 @@ data class AuthUiState(
 
 class AuthViewModel : ViewModel() {
 
-    // ---- LOGIN STATE ----
     private val _loginState = MutableStateFlow(AuthUiState())
     val loginState: StateFlow<AuthUiState> = _loginState
 
-    // ---- REGISTER STATE ----
     private val _registerState = MutableStateFlow(AuthUiState())
     val registerState: StateFlow<AuthUiState> = _registerState
 
-    // ----------------------------------------------------------
-    // LOGIN
-    // ----------------------------------------------------------
-    fun login(username: String, password: String) {
+    fun login(context: Context, username: String, password: String) {
         viewModelScope.launch {
             _loginState.value = AuthUiState(isLoading = true)
 
             try {
                 val response = RetrofitClient.api.login(
                     LoginRequest(
-                        usernameOrEmail = username,  // ← CORRIGIDO
+                        usernameOrEmail = username,
                         password = password
                     )
                 )
 
                 if (response.isSuccessful && response.body() != null) {
-                    // Podes guardar o token se quiseres
                     val token = response.body()!!.token
+
+                    // ✅ GUARDA O TOKEN
+                    TokenManager.saveToken(context, token, username)
 
                     _loginState.value = AuthUiState(
                         isLoading = false,
@@ -67,9 +66,6 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    // ----------------------------------------------------------
-    // REGISTO
-    // ----------------------------------------------------------
     fun register(nome: String, username: String, email: String, password: String) {
         viewModelScope.launch {
             _registerState.value = AuthUiState(isLoading = true)

@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -28,6 +29,8 @@ fun LoginScreen(
     onBack: () -> Unit,
     onSuccess: () -> Unit
 ) {
+    val context = LocalContext.current  // ← ADICIONADO
+
     // 👉 Backend usa username, não email
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -126,7 +129,7 @@ fun LoginScreen(
                     Button(
                         onClick = {
                             if (username.isNotEmpty() && password.isNotEmpty() && !uiState.isLoading) {
-                                authViewModel.login(username, password)
+                                authViewModel.login(context, username, password)  // ← ALTERADO
                             }
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF204E3A)),

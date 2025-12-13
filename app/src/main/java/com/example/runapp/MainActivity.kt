@@ -116,9 +116,50 @@ class MainActivity : ComponentActivity() {
 
                     // MAPA
                     composable("map") {
-                        MapScreen(
-                            onBack = { nav.popBackStack() }
-                        )
+                        val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+                        val scope = rememberCoroutineScope()
+
+                        ModalNavigationDrawer(
+                            drawerState = drawerState,
+                            drawerContent = {
+                                SideMenu(
+                                    currentItem = DrawerItem.HOME,
+                                    onHomeClick = {
+                                        scope.launch { drawerState.close() }
+                                        nav.navigate("home") {
+                                            popUpTo("home") { inclusive = true }
+                                        }
+                                    },
+                                    onLeaderboardClick = {
+                                        scope.launch { drawerState.close() }
+                                        nav.navigate("leaderboard")
+                                    },
+                                    onProfileClick = {
+                                        scope.launch { drawerState.close() }
+                                        nav.navigate("profile")
+                                    },
+                                    onHistoryClick = {
+                                        scope.launch { drawerState.close() }
+                                    },
+                                    onSettingsClick = {
+                                        scope.launch { drawerState.close() }
+                                    },
+                                    onLogoutClick = {
+                                        scope.launch { drawerState.close() }
+                                        nav.navigate("start") {
+                                            popUpTo("start") { inclusive = true }
+                                        }
+                                    }
+                                )
+                            }
+                        ) {
+                            MapScreen(
+                                onBack = { nav.popBackStack() },
+                                onOpenDrawer = {
+                                    scope.launch { drawerState.open() }
+                                }
+                            )
+                        }
                     }
 
                     // LEADERBOARD

@@ -53,7 +53,10 @@ fun formatTime(millis: Long): String {
 }
 
 @Composable
-fun MapScreen(onBack: () -> Unit) {
+fun MapScreen(
+    onBack: () -> Unit,
+    onOpenDrawer: () -> Unit  // ← ADICIONA ISTO
+) {
 
     // VIEWMODEL DO TRACKING
     val runViewModel: RunTrackingViewModel = viewModel()
@@ -134,7 +137,7 @@ fun MapScreen(onBack: () -> Unit) {
             )
 
             // Top bar
-            TopOverlay()
+            TopOverlay(onOpenDrawer = onOpenDrawer)
 
             // Parte de baixo (stats + botões)
             BottomOverlay(
@@ -161,7 +164,7 @@ fun MapScreen(onBack: () -> Unit) {
 }
 
 @Composable
-private fun TopOverlay() {
+private fun TopOverlay(onOpenDrawer: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -173,7 +176,7 @@ private fun TopOverlay() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { /* TODO abrir menu */ }) {
+            IconButton(onClick = onOpenDrawer) {
                 Icon(
                     imageVector = Icons.Default.Menu,
                     contentDescription = "Menu"
@@ -328,6 +331,9 @@ private fun StatItem(title: String, value: String) {
 @Composable
 fun MapScreenPreview() {
     MaterialTheme {
-        MapScreen(onBack = {})
+        MapScreen(
+            onBack = {},
+            onOpenDrawer = {}
+        )
     }
 }
