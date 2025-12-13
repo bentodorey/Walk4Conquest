@@ -1,6 +1,7 @@
 package com.walk4conquest.Entidades;
 
 import jakarta.persistence.*;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity
+@Table(name = "utilizador")
 public class Utilizador implements UserDetails {
 
     @Id
@@ -18,7 +20,7 @@ public class Utilizador implements UserDetails {
     private String nome;
 
     @Column(unique = true)
-    private String username;  // NOVO CAMPO
+    private String username;
 
     @Column(unique = true)
     private String email;
@@ -29,13 +31,38 @@ public class Utilizador implements UserDetails {
     // CAMPOS ADICIONAIS
     // ------------------------
 
-    private String sexo;
+private String sexo;
 
-    private Double alturaCm;
+@Column(name = "altura_cm")
+private Double alturaCm;
 
-    private Double pesoKg;
+@Column(name = "peso_kg")
+private Double pesoKg;
 
-    private LocalDate dataNascimento;
+@Column(name = "data_nascimento")
+private LocalDate dataNascimento;
+
+    // ------------------------
+    // CAMPOS DE ESTATÍSTICAS (NOVOS)
+    // ------------------------
+
+    @Column(name = "pontos")
+    private Integer pontos = 0;
+
+    @Column(name = "total_distancia_km")
+    private Double totalDistanciaKm = 0.0;
+
+    @Column(name = "total_corridas")
+    private Integer totalCorridas = 0;
+
+    @Column(name = "total_territorios_conquistados")
+    private Integer totalTerritoriosConquistados = 0;
+
+    @Column(name = "nivel")
+    private Integer nivel = 1;
+
+    @Column(name = "experiencia")
+    private Integer experiencia = 0;
 
     // ------------------------
     // GETTERS E SETTERS
@@ -67,7 +94,7 @@ public class Utilizador implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;  // AGORA RETORNA O USERNAME
+        return username;
     }
 
     public void setUsername(String username) {
@@ -113,6 +140,56 @@ public class Utilizador implements UserDetails {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    // GETTERS E SETTERS DAS ESTATÍSTICAS
+
+    public Integer getPontos() {
+        return pontos;
+    }
+
+    public void setPontos(Integer pontos) {
+        this.pontos = pontos;
+    }
+
+    public Double getTotalDistanciaKm() {
+        return totalDistanciaKm;
+    }
+
+    public void setTotalDistanciaKm(Double totalDistanciaKm) {
+        this.totalDistanciaKm = totalDistanciaKm;
+    }
+
+    public Integer getTotalCorridas() {
+        return totalCorridas;
+    }
+
+    public void setTotalCorridas(Integer totalCorridas) {
+        this.totalCorridas = totalCorridas;
+    }
+
+    public Integer getTotalTerritoriosConquistados() {
+        return totalTerritoriosConquistados;
+    }
+
+    public void setTotalTerritoriosConquistados(Integer totalTerritoriosConquistados) {
+        this.totalTerritoriosConquistados = totalTerritoriosConquistados;
+    }
+
+    public Integer getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(Integer nivel) {
+        this.nivel = nivel;
+    }
+
+    public Integer getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(Integer experiencia) {
+        this.experiencia = experiencia;
     }
 
     // MÉTODOS OBRIGATÓRIOS DO USERDETAILS

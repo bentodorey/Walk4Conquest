@@ -1,9 +1,10 @@
 package com.walk4conquest.Entidades;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Conquista")
+@Table(name = "conquista")
 public class Conquista {
 
     @Id
