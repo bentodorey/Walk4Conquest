@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UtilizadorService {
@@ -54,7 +55,7 @@ public class UtilizadorService {
         // 3) Criar novo utilizador
         Utilizador u = new Utilizador();
         u.setNome(dto.getNome());
-        u.setUsername(dto.getUsername());  // ADICIONAR USERNAME
+        u.setUsername(dto.getUsername());
         u.setEmail(dto.getEmail());
 
         // 4) Encriptar password
@@ -75,11 +76,22 @@ public class UtilizadorService {
     // MÉTODOS AUXILIARES
     // --------------------------
 
-    public Utilizador findByEmail(String email) {
-        return repo.findByEmail(email);
+   public Utilizador findByEmail(String email) {
+    Optional<Utilizador> opt = repo.findByEmail(email);
+    if (opt.isPresent()) {
+        return opt.get();
+    } else {
+        throw new RuntimeException();
+    }
+}
+
+public Utilizador findByUsername(String username) {
+    Optional<Utilizador> opt = repo.findByUsername(username);
+    if (opt.isPresent()) {
+        return opt.get();
+    } else {
+        throw new RuntimeException();
     }
 
-    public Utilizador findByUsername(String username) {
-        return repo.findByUsername(username);
     }
 }

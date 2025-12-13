@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -68,6 +69,33 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", "Credenciais inválidas"));
+        }
+    }
+
+    // NOVO ENDPOINT: Buscar dados do utilizador autenticado
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser() {
+        try {
+            // Obtém o utilizador autenticado do contexto de segurança
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+
+            // Busca o utilizador na base de dados
+            Utilizador user = service.findByUsername(username);
+            
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("error", "Utilizador não encontrado"));
+            }
+
+            // Remove a password antes de retornar
+            user.setPassword(null);
+
+            return ResponseEntity.ok(user);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", e.getMessage()));
         }
     }
 }
