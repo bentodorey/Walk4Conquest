@@ -123,61 +123,59 @@ O Walk4Conquest é uma aplicação Android que permite ao utilizador:
 - **UC 4 – Projeto Desenvolvimento Móvel:** planeamento, gestão de projeto, utilização de ferramentas de controlo de versões (Git).
 - **UC 5 – Competências Comunicacionais:** aperfeiçoamento da utilização de powerpoint e de transmissão das ideias essenciais.  
 - **UC 6 – Matemática Discreta :** resolução de problemas de classificação e de areas.  
-
-
-
----
-
-### iii. Requisitos Técnicos Finais
+iii. Requisitos Técnicos Finais
 
 Principais requisitos técnicos implementados:
 
-- **RF1 – Registo e autenticação de utilizadores** via <<método: email/password, OAuth, etc.>>.  
-- **RF2 – Registo de caminhadas** com recurso ao GPS do dispositivo.  
-- **RF3 – Visualização de mapa interativo** com <<biblioteca ou serviço usado: Google Maps, Mapbox, etc.>>.  
-- **RF4 – Sistema de conquista de territórios** baseado em <<ex.: polígonos no mapa, grelha de células, pontos de interesse>>.  
-- **RF5 – Rankings / pontuações entre utilizadores.**  
-- **RF6 – Consulta de histórico de conquistas e estatísticas.**
+– RF1 – Registo e autenticação de utilizadores
+A aplicação permite que os utilizadores criem uma conta e façam login através de email e palavra-passe, garantindo que cada utilizador tem acesso à sua própria informação.
 
----
+– RF2 – Registo de caminhadas com GPS
+Durante as caminhadas, a aplicação utiliza o GPS do dispositivo para registar o percurso realizado pelo utilizador, incluindo a distância percorrida e o tempo da atividade.
 
-### iv. Arquitetura da Solução
+– RF3 – Visualização de mapa interativo
+A aplicação apresenta um mapa interativo onde o utilizador pode visualizar a sua localização, os percursos efetuados e os territórios conquistados.
 
-A arquitetura segue uma abordagem <<ex.: cliente‑servidor>>:
+– RF4 – Sistema de conquista de territórios
+O utilizador pode conquistar territórios ao caminhar em determinadas áreas do mapa. Quando o percurso cobre uma parte significativa de uma área definida, o território passa a ser considerado conquistado.
 
-- **Camada de Apresentação (App Móvel):**
-  - Ecrãs de login/registro, mapa, perfil, rankings, etc.
-  - Implementação de lógica de interação com o utilizador.
+– RF5 – Rankings e pontuações
+O sistema atribui pontos ao utilizador com base nas caminhadas e territórios conquistados, permitindo a visualização de rankings que comparam o desempenho entre utilizadores.
 
-- **Camada de Lógica de Negócio:**
-  - Cálculo de pontos e conquistas.
-  - Regras de atualização de territórios e rankings.
-  - Validação de dados recebidos.
+– RF6 – Histórico e estatísticas
+A aplicação disponibiliza um histórico das atividades realizadas, bem como estatísticas gerais, como o número de caminhadas, territórios conquistados e distância total percorrida.
 
-- **Camada de Dados:**
-  - <<Descrever: BD local (SQLite/Room), BD remota (MySQL/PostgreSQL/Firebase), etc.>>
-  - Modelos de dados para utilizadores, sessões de caminhada, territórios, conquistas, etc.
+iv. Arquitetura da Solução
 
-- **Serviços Externos:**
-  - API de mapas / geolocalização.
-  - Outros serviços que utilizem (ex.: autenticação externa).
+A solução desenvolvida segue uma estrutura cliente-servidor, dividida em várias partes para facilitar a organização e manutenção do sistema.
 
-(Incluir no relatório final o diagrama de arquitetura que já tiverem desenhado.)
+– Camada de Apresentação (Aplicação Móvel)
+Corresponde à aplicação Android utilizada pelo utilizador. Inclui os ecrãs de login e registo, mapa, perfil do utilizador, rankings e histórico, sendo responsável pela interação direta com o utilizador e pela apresentação da informação.
 
----
+– Camada de Lógica da Aplicação
+Responsável por gerir as regras principais da aplicação, como a atribuição de pontos e a verificação das conquistas, processando a informação recebida antes de a guardar.
 
-### v. Tecnologias Utilizadas
+– Camada de Dados
+Utiliza uma base de dados local para guardar informação temporária no dispositivo e uma base de dados remota para armazenar permanentemente os dados dos utilizadores, caminhadas e territórios.
 
-- Linguagem de programação: Kotlin, Java  
-- Plataforma móvel: Android Studio  
-- Frameworks / bibliotecas:
-  - <<Ex.: Android Jetpack (ViewModel, LiveData, Room)>>  
-  - <<Ex.: Retrofit / Volley para chamadas REST>>  
-  - <<Ex.: Google Maps SDK / Mapbox>>  
-- Base de dados: MySQL 
-- Serviços web / backend: <<Node.js, Spring Boot, Firebase Functions, etc., ou “não aplicável” se não tiverem>>  
-- Ferramentas de apoio: Git/GitHub, Figma.
+– Serviços Externos
+Incluem serviços de mapas e localização para obtenção da posição do utilizador e apresentação do mapa, bem como serviços de comunicação entre a aplicação móvel e o servidor.
 
+(O diagrama da arquitetura da solução encontra-se incluído no relatório final.)
+
+v. Tecnologias Utilizadas
+
+– Linguagem de programação: Kotlin
+– Plataforma de desenvolvimento: Android Studio
+
+– Ferramentas e bibliotecas
+Utilização de componentes Android para gestão da interface e dados da aplicação, bibliotecas para comunicação com o servidor e serviços de mapas para localização e visualização de percursos.
+
+– Base de dados
+Utilização de uma base de dados remota para armazenamento principal da informação e uma base de dados local como apoio ao funcionamento da aplicação.
+
+– Ferramentas de apoio
+Git e GitHub para controlo de versões e Figma para o design das interfaces da aplicação.
 
 ---
 
