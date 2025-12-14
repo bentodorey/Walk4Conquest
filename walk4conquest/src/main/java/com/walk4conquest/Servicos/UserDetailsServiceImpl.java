@@ -18,17 +18,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
 
-        // Tenta encontrar por username primeiro
+       
         Utilizador user = utilizadorRepository.findByUsername(usernameOrEmail)
                 .orElse(null);
 
-        // Se não encontrar, tenta por email
+        
         if (user == null) {
             user = utilizadorRepository.findByEmail(usernameOrEmail)
                     .orElse(null);
         }
 
-        // Se ainda não encontrar, lança exceção
+        
         if (user == null) {
             throw new UsernameNotFoundException("Utilizador não encontrado: " + usernameOrEmail);
         }

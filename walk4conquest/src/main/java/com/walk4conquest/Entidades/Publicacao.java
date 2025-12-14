@@ -26,6 +26,6 @@ public class Publicacao {
     @Column(name = "data_publicacao")
     private String dataPublicacao;
 
-    // GETTERS & SETTERS
+    
 }
 

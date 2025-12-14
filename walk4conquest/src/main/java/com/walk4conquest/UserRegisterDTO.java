@@ -17,7 +17,7 @@ public class UserRegisterDTO {
     public UserRegisterDTO() {
     }
 
-    // GETTERS
+    
     public String getNome() {
         return nome;
     }
@@ -50,7 +50,7 @@ public class UserRegisterDTO {
         return dataNascimento;
     }
 
-    // SETTERS
+    
     public void setNome(String nome) {
         this.nome = nome;
     }

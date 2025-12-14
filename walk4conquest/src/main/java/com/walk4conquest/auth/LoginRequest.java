@@ -1,7 +1,7 @@
 package com.walk4conquest.auth;
 
 public class LoginRequest {
-    private String usernameOrEmail;  
+    private String usernameOrEmail;
     private String password;
 
     public LoginRequest() {

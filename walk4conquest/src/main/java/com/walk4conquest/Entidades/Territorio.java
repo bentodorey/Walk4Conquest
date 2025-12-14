@@ -19,5 +19,5 @@ public class Territorio {
 
     private Double longitude;
 
-    // GETTERS & SETTERS
+    
 }

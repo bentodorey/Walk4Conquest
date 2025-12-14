@@ -28,6 +28,6 @@ public class Conquista {
     @Column(name = "duracao_min")
     private Integer duracaoMin;
 
-    // GETTERS & SETTERS
+    
 }
 

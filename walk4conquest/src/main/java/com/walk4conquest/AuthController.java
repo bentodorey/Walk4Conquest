@@ -72,15 +72,15 @@ public class AuthController {
         }
     }
 
-    // NOVO ENDPOINT: Buscar dados do utilizador autenticado
+    
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser() {
         try {
-            // Obtém o utilizador autenticado do contexto de segurança
+            
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
 
-            // Busca o utilizador na base de dados
+            
             Utilizador user = service.findByUsername(username);
             
             if (user == null) {
@@ -88,7 +88,7 @@ public class AuthController {
                         .body(Map.of("error", "Utilizador não encontrado"));
             }
 
-            // Remove a password antes de retornar
+           
             user.setPassword(null);
 
             return ResponseEntity.ok(user);

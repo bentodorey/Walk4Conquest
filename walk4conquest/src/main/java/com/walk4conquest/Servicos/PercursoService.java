@@ -28,7 +28,7 @@ public class PercursoService {
         this.coordenadaRepo = coordenadaRepo;
     }
 
-    // MÉTODOS ANTIGOS (manter para compatibilidade)
+    
     public List<Percurso> findAll() { 
         return percursoRepo.findAll(); 
     }
@@ -46,21 +46,18 @@ public class PercursoService {
         percursoRepo.deleteById(id); 
     }
 
-    // NOVOS MÉTODOS PARA O SISTEMA DE CORRIDA
-
-    /**
-     * Iniciar um novo percurso
-     */
+    
+    
     @Transactional
     public Percurso iniciarPercurso(Long utilizadorId, Double latInicial, Double longInicial) {
         Utilizador utilizador = utilizadorRepo.findById(utilizadorId)
             .orElseThrow(() -> new RuntimeException("Utilizador não encontrado"));
 
-        // Criar novo percurso
+        
         Percurso percurso = new Percurso(utilizador);
         percurso = percursoRepo.save(percurso);
 
-        // Adicionar primeira coordenada
+        
         CoordenadaPercurso coordenadaInicial = new CoordenadaPercurso(latInicial, longInicial);
         percurso.adicionarCoordenada(coordenadaInicial);
         coordenadaRepo.save(coordenadaInicial);
@@ -68,9 +65,7 @@ public class PercursoService {
         return percurso;
     }
 
-    /**
-     * Adicionar coordenada GPS ao percurso
-     */
+    
     @Transactional
     public Percurso adicionarCoordenada(Long percursoId, Double latitude, Double longitude) {
         Percurso percurso = findById(percursoId);
@@ -86,9 +81,7 @@ public class PercursoService {
         return percurso;
     }
 
-    /**
-     * Finalizar percurso e calcular estatísticas
-     */
+   
     @Transactional
     public Percurso finalizarPercurso(Long percursoId, Double distanciaKm, Integer duracaoMin,
                                      Integer calorias, Integer passos, String ritmoMedio,
@@ -99,7 +92,7 @@ public class PercursoService {
             throw new RuntimeException("Percurso já está concluído");
         }
 
-        // Finalizar percurso
+        
         percurso.finalizar();
         percurso.setDistanciaKm(distanciaKm);
         percurso.setDuracaoMin(duracaoMin);
@@ -108,7 +101,7 @@ public class PercursoService {
         percurso.setRitmoMedio(ritmoMedio);
         percurso.setVelocidadeMediaKmh(velocidadeMediaKmh);
 
-        // Calcular duração real se não foi passada
+        
         if (duracaoMin == null && percurso.getDataInicio() != null && percurso.getDataFim() != null) {
             long minutos = ChronoUnit.MINUTES.between(percurso.getDataInicio(), percurso.getDataFim());
             percurso.setDuracaoMin((int) minutos);
@@ -116,15 +109,13 @@ public class PercursoService {
 
         percurso = percursoRepo.save(percurso);
 
-        // Atualizar estatísticas do utilizador
-        atualizarEstatisticasUtilizador(percurso.getUtilizador(), distanciaKm);
+       
+        atualizarEstatisticasEPontos(percurso.getUtilizador(), distanciaKm);
 
         return percurso;
     }
 
-    /**
-     * Buscar histórico de percursos de um utilizador
-     */
+    
     public List<Percurso> getHistoricoUtilizador(Long utilizadorId) {
         Utilizador utilizador = utilizadorRepo.findById(utilizadorId)
             .orElseThrow(() -> new RuntimeException("Utilizador não encontrado"));
@@ -132,9 +123,7 @@ public class PercursoService {
         return percursoRepo.findByUtilizadorOrderByDataInicioDesc(utilizador);
     }
 
-    /**
-     * Buscar percurso em andamento de um utilizador
-     */
+    
     public Percurso getPercursoEmAndamento(Long utilizadorId) {
         Utilizador utilizador = utilizadorRepo.findById(utilizadorId)
             .orElseThrow(() -> new RuntimeException("Utilizador não encontrado"));
@@ -146,12 +135,24 @@ public class PercursoService {
         return percursosEmAndamento.isEmpty() ? null : percursosEmAndamento.get(0);
     }
 
-    /**
-     * Atualizar estatísticas do utilizador após finalizar percurso
-     */
-    private void atualizarEstatisticasUtilizador(Utilizador utilizador, Double distanciaKm) {
-        utilizador.setTotalDistanciaKm(utilizador.getTotalDistanciaKm() + distanciaKm);
-        utilizador.setTotalCorridas(utilizador.getTotalCorridas() + 1);
+    
+    private void atualizarEstatisticasEPontos(Utilizador utilizador, Double distanciaKm) {
+        
+        Double distanciaAtual = utilizador.getTotalDistanciaKm() != null ? utilizador.getTotalDistanciaKm() : 0.0;
+        utilizador.setTotalDistanciaKm(distanciaAtual + distanciaKm);
+        
+        
+        Integer corridasAtuais = utilizador.getTotalCorridas() != null ? utilizador.getTotalCorridas() : 0;
+        utilizador.setTotalCorridas(corridasAtuais + 1);
+        
+        
+        int pontosGanhos = (int) ((distanciaKm / 2.0) * 50);
+        int pontosAtuais = utilizador.getPontos() != null ? utilizador.getPontos() : 0;
+        utilizador.setPontos(pontosAtuais + pontosGanhos);
+        
+        
         utilizadorRepo.save(utilizador);
+        
+        System.out.println("✅ Utilizador " + utilizador.getNome() + " ganhou " + pontosGanhos + " pontos! (Total: " + utilizador.getPontos() + ")");
     }
 }

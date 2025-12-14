@@ -27,9 +27,7 @@ public class Utilizador implements UserDetails {
 
     private String password;
 
-    // ------------------------
-    // CAMPOS ADICIONAIS
-    // ------------------------
+    
 
 private String sexo;
 
@@ -42,10 +40,7 @@ private Double pesoKg;
 @Column(name = "data_nascimento")
 private LocalDate dataNascimento;
 
-    // ------------------------
-    // CAMPOS DE ESTATÍSTICAS (NOVOS)
-    // ------------------------
-
+   
     @Column(name = "pontos")
     private Integer pontos = 0;
 
@@ -64,9 +59,7 @@ private LocalDate dataNascimento;
     @Column(name = "experiencia")
     private Integer experiencia = 0;
 
-    // ------------------------
-    // GETTERS E SETTERS
-    // ------------------------
+    
 
     public Long getId() {
         return id;
@@ -142,7 +135,6 @@ private LocalDate dataNascimento;
         this.dataNascimento = dataNascimento;
     }
 
-    // GETTERS E SETTERS DAS ESTATÍSTICAS
 
     public Integer getPontos() {
         return pontos;
@@ -192,7 +184,7 @@ private LocalDate dataNascimento;
         this.experiencia = experiencia;
     }
 
-    // MÉTODOS OBRIGATÓRIOS DO USERDETAILS
+    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
