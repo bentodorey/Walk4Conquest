@@ -18,6 +18,8 @@
 
 **Nome do Projeto:** Walk4Conquest  
 **Repositório GitHub:** https://github.com/bentodorey/Walk4Conquest  
+**Video promocional:** https://www.canva.com/design/DAGUrp0sBsU/aOAsDCNApVAeYyBM8psb5w/edit?utm_content=DAGUrp0sBsU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 
 ---
 
