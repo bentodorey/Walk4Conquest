@@ -207,7 +207,6 @@ Descrever brevemente as principais classes:
 - `Conquest` – regista conquistas efetuadas numa sessão.  
 - Outras classes relevantes ligadas à interface, serviços, repositórios de dados, etc.
 
-(O diagrama de classes completo deve ser incluído como figura ou anexo.)
 
 ---
 
@@ -228,7 +227,6 @@ Para cada campo, descrever:
 - Restrição (PK, FK, NOT NULL, etc.)  
 - Descrição
 
-(O modelo ER gráfico deve ser anexado; aqui fica a descrição textual.)
 
 ---
 
@@ -256,7 +254,7 @@ Caso exista API/serviço REST, indicar:
 Exemplo de referência no relatório:
 
 > A documentação detalhada da API REST encontra‑se disponível em:  
-> <<URL da documentação no GitHub Wiki, Postman Collection, Swagger/OpenAPI, etc.>>
+
 
 
 
@@ -265,7 +263,7 @@ Exemplo de referência no relatório:
 ### xi. Link para o Manual do Utilizador
 
 > O Manual do Utilizador, contendo descrições passo a passo dos ecrãs e funcionalidades da aplicação, encontra‑se disponível em:  
-> <<URL para ficheiro `MANUAL_UTILIZADOR.md` ou PDF no repositório GitHub>>.
+
 
 
 ---
