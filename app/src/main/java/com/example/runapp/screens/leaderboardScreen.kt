@@ -8,77 +8,94 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.filled.EmojiEvents
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.runapp.viewmodels.LeaderboardViewModel
 
-// Modelo de cada entrada na leaderboard
-data class LeaderboardEntry(
-    val name: String,
-    val distanceKm: Double
-)
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LeaderboardScreen(onBack: () -> Unit) {
+fun LeaderboardScreen(
+    onBack: () -> Unit = {},
+    viewModel: LeaderboardViewModel = viewModel()
+) {
+    val leaderboard by viewModel.leaderboard.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
-    // Dados temporários (mais tarde ligamos ao backend)
-    val runners = remember {
-        listOf(
-            LeaderboardEntry("Tiago", 42.3),
-            LeaderboardEntry("Maria", 30.1),
-            LeaderboardEntry("João", 18.7),
-            LeaderboardEntry("Ana", 12.5),
-            LeaderboardEntry("Bento", 8.2)
-        ).sortedByDescending { it.distanceKm }
+    LaunchedEffect(Unit) {
+        viewModel.loadLeaderboard()
     }
 
-    Scaffold { padding ->
-        Column(
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Leaderboard") },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.Default.ArrowBack, "Voltar")
+                    }
+                }
+            )
+        }
+    ) { padding ->
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = 16.dp, vertical = 24.dp)
         ) {
-
-            // Barra de topo
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back"
+            when {
+                isLoading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
                     )
                 }
-
-                Text(
-                    text = "Leaderboard",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Lista dos utilizadores
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                itemsIndexed(runners) { index, entry ->
-                    LeaderboardRow(
-                        position = index + 1,
-                        entry = entry
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
+                leaderboard.isEmpty() -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.EmojiEvents,
+                            contentDescription = null,
+                            modifier = Modifier.size(80.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Nenhum utilizador ainda",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        itemsIndexed(leaderboard) { index, user ->
+                            LeaderboardRow(
+                                position = index + 1,
+                                nome = user.nome,
+                                username = user.username,
+                                pontos = user.pontos,
+                                distanciaKm = user.total_distancia_km ?: 0.0,
+                                corridas = user.total_corridas ?: 0
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -88,12 +105,23 @@ fun LeaderboardScreen(onBack: () -> Unit) {
 @Composable
 private fun LeaderboardRow(
     position: Int,
-    entry: LeaderboardEntry
+    nome: String,
+    username: String,
+    pontos: Int,
+    distanciaKm: Double,
+    corridas: Int
 ) {
+    val medalColor = when (position) {
+        1 -> Color(0xFFFFD700) // Ouro
+        2 -> Color(0xFFC0C0C0) // Prata
+        3 -> Color(0xFFCD7F32) // Bronze
+        else -> Color.Transparent
+    }
+
     Surface(
         shape = RoundedCornerShape(16.dp),
-        color = Color.White,
-        shadowElevation = 4.dp,
+        color = if (position <= 3) medalColor.copy(alpha = 0.1f) else Color.White,
+        shadowElevation = if (position <= 3) 6.dp else 4.dp,
         modifier = Modifier.fillMaxWidth()
     ) {
         Row(
@@ -102,15 +130,23 @@ private fun LeaderboardRow(
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Posição com medalha
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(if (position <= 3) medalColor else Color(0xFF204E3A)),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "$position",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = if (position <= 3) Color.Black else Color.White
+                )
+            }
 
-            // Posição (ex: 1º)
-            Text(
-                text = position.toString() + "º", // ← corrigido
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(12.dp))
 
             // Círculo com inicial
             Box(
@@ -121,7 +157,7 @@ private fun LeaderboardRow(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = entry.name.first().uppercaseChar().toString(),
+                    text = nome.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
@@ -129,33 +165,49 @@ private fun LeaderboardRow(
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // Nome + label
+            // Info
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = entry.name,
+                    text = nome,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp
                 )
                 Text(
-                    text = "Total distance",
-                    fontSize = 12.sp,
+                    text = "@$username",
+                    fontSize = 11.sp,
+                    color = Color.Gray
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                Row {
+                    Text(
+                        text = "${String.format("%.1f", distanciaKm)} km",
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color(0xFF204E3A)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "$corridas corridas",
+                        fontSize = 11.sp,
+                        color = Color.Gray
+                    )
+                }
+            }
+
+            // Pontos
+            Column(horizontalAlignment = Alignment.End) {
+                Text(
+                    text = "$pontos",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF204E3A)
+                )
+                Text(
+                    text = "pontos",
+                    fontSize = 10.sp,
                     color = Color.Gray
                 )
             }
-
-            Text(
-                text = String.format("%.1f km", entry.distanceKm),
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
         }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun LeaderboardPreview() {
-    MaterialTheme {
-        LeaderboardScreen(onBack = {})
     }
 }

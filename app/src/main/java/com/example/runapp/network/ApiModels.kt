@@ -58,3 +58,16 @@ data class PercursoResponse(
     val velocidadeMediaKmh: Double?,
     val estado: String
 )
+
+// Leaderboard
+data class LeaderboardItem(
+    val id: Long,
+    val nome: String,
+    val username: String,
+    val pontos: Int,
+    val total_distancia_km: Double?,
+    val total_corridas: Int?,
+    val total_territorios_conquistados: Int?,
+    val nivel: Int?,
+    val conquistas: Int?
+)

@@ -20,4 +20,7 @@ interface ApiService {
     suspend fun getHistoricoPercursos(
         @Query("utilizadorId") utilizadorId: Long
     ): List<PercursoResponse>
+
+    @GET("leaderboard")
+    suspend fun getLeaderboard(): List<LeaderboardItem>
 }
