@@ -36,45 +36,41 @@ public class UtilizadorService {
         repo.deleteById(id);
     }
 
-    // --------------------------
-    // REGISTO DE NOVO UTILIZADOR
-    // --------------------------
+   
 
     public Utilizador registar(UserRegisterDTO dto) {
 
-        // 1) Verificar se o email já existe
+        
         if (repo.existsByEmail(dto.getEmail())) {
             throw new RuntimeException("Email já registado.");
         }
 
-        // 2) Verificar se o username já existe
+        
         if (repo.existsByUsername(dto.getUsername())) {
             throw new RuntimeException("Username já registado.");
         }
 
-        // 3) Criar novo utilizador
+        
         Utilizador u = new Utilizador();
         u.setNome(dto.getNome());
         u.setUsername(dto.getUsername());
         u.setEmail(dto.getEmail());
 
-        // 4) Encriptar password
+        
         String hash = passwordEncoder.encode(dto.getPassword());
         u.setPassword(hash);
 
-        // 5) Preencher campos opcionais
+        
         u.setSexo(dto.getSexo());
         u.setAlturaCm(dto.getAlturaCm());
         u.setPesoKg(dto.getPesoKg());
         u.setDataNascimento(dto.getDataNascimento());
 
-        // 6) Guardar
+        
         return repo.save(u);
     }
 
-    // --------------------------
-    // MÉTODOS AUXILIARES
-    // --------------------------
+   
 
    public Utilizador findByEmail(String email) {
     Optional<Utilizador> opt = repo.findByEmail(email);

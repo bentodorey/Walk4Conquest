@@ -25,7 +25,7 @@ public class CoordenadaPercurso {
     @Column(name = "timestamp_ponto")
     private LocalDateTime timestampPonto;
 
-    // CONSTRUTORES
+    
     public CoordenadaPercurso() {}
 
     public CoordenadaPercurso(Double latitude, Double longitude) {
@@ -34,7 +34,7 @@ public class CoordenadaPercurso {
         this.timestampPonto = LocalDateTime.now();
     }
 
-    // GETTERS & SETTERS
+    
     public Long getId() {
         return id;
     }

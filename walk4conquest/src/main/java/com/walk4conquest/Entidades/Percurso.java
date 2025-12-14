@@ -53,14 +53,14 @@ public class Percurso {
     @OneToMany(mappedBy = "percurso", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CoordenadaPercurso> coordenadas = new ArrayList<>();
 
-    // ENUM
+    
     public enum EstadoPercurso {
         EM_ANDAMENTO,
         CONCLUIDO,
         PAUSADO
     }
 
-    // CONSTRUTORES
+    
     public Percurso() {}
 
     public Percurso(Utilizador utilizador) {
@@ -69,7 +69,7 @@ public class Percurso {
         this.estado = EstadoPercurso.EM_ANDAMENTO;
     }
 
-    // GETTERS & SETTERS
+    
     public Long getId() {
         return id;
     }
@@ -174,7 +174,7 @@ public class Percurso {
         this.coordenadas = coordenadas;
     }
 
-    // MÉTODOS AUXILIARES
+    
     public void adicionarCoordenada(CoordenadaPercurso coordenada) {
         coordenadas.add(coordenada);
         coordenada.setPercurso(this);

@@ -27,7 +27,7 @@ public class PercursoController {
         this.percursoService = percursoService;
     }
 
-    // ENDPOINTS ANTIGOS (manter para compatibilidade)
+    
 
     @GetMapping
     public List<Percurso> findAll() {
@@ -55,12 +55,7 @@ public class PercursoController {
         percursoService.delete(id);
     }
 
-    // NOVOS ENDPOINTS PARA O SISTEMA DE CORRIDA
-
-    /**
-     * POST /percurso/iniciar
-     * Iniciar uma nova corrida
-     */
+    
     @PostMapping("/iniciar")
     public ResponseEntity<?> iniciarPercurso(@RequestBody IniciarPercursoRequest request) {
         try {
@@ -79,10 +74,7 @@ public class PercursoController {
         }
     }
 
-    /**
-     * POST /percurso/{id}/adicionar-ponto
-     * Adicionar coordenada GPS durante a corrida
-     */
+    
     @PostMapping("/{id}/adicionar-ponto")
     public ResponseEntity<?> adicionarPonto(@PathVariable Long id, 
                                            @RequestBody CoordenadaRequest coordenada) {
@@ -104,10 +96,7 @@ public class PercursoController {
         }
     }
 
-    /**
-     * POST /percurso/{id}/finalizar
-     * Finalizar corrida e guardar estatísticas
-     */
+    
     @PostMapping("/{id}/finalizar")
     public ResponseEntity<?> finalizarPercurso(@PathVariable Long id,
                                                @RequestBody FinalizarPercursoRequest request) {
@@ -130,10 +119,7 @@ public class PercursoController {
         }
     }
 
-    /**
-     * GET /percurso/historico
-     * Ver histórico de corridas do utilizador autenticado
-     */
+ 
     @GetMapping("/historico")
     public ResponseEntity<?> getHistorico(@RequestParam Long utilizadorId) {
         try {
@@ -151,10 +137,7 @@ public class PercursoController {
         }
     }
 
-    /**
-     * GET /percurso/em-andamento
-     * Verificar se utilizador tem corrida em andamento
-     */
+   
     @GetMapping("/em-andamento")
     public ResponseEntity<?> getPercursoEmAndamento(@RequestParam Long utilizadorId) {
         try {

@@ -24,5 +24,5 @@ public class Comentario {
     @Column(name = "data_comentario")
     private String dataComentario;
 
-    // GETTERS & SETTERS
+    
 }
