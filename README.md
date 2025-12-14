@@ -117,12 +117,14 @@ O Walk4Conquest é uma aplicação Android que permite ao utilizador:
 
 ### ii. Enquadramento nas Diversas Unidades Curriculares
 
-- **UC 1 – <<Nome>>:** aplicação de conceitos de análise de requisitos, casos de utilização e modelação UML.  
-- **UC 2 – <<Nome>>:** desenvolvimento da interface móvel, navegação entre ecrãs e experiência do utilizador.  
-- **UC 3 – <<Nome>>:** implementação de serviços web / REST, consumo de APIs externas e gestão de dados persistentes.  
-- **UC 4 – <<Nome>>:** planeamento, gestão de projeto, utilização de ferramentas de controlo de versões (Git).  
+- **UC 1 – :Programação Orientada por Objetos** aplicação de conceitos de análise de requisitos, casos de utilização e modelação UML.  
+- **UC 2 – Programação Mobile:** desenvolvimento da interface móvel, navegação entre ecrãs e experiência do utilizador.  
+- **UC 3 – Bases de Dados:** implementação de serviços web / REST, consumo de APIs externas e gestão de dados persistentes.  
+- **UC 4 – Projeto Desenvolvimento Móvel:** planeamento, gestão de projeto, utilização de ferramentas de controlo de versões (Git).
+- **UC 5 – Competências Comunicacionais:** aperfeiçoamento da utilização de powerpoint e de transmissão das ideias essenciais.  
+- **UC 6 – Matemática Discreta :** resolução de problemas de classificação e de areas.  
 
-(Adaptar às UCs reais do teu curso.)
+
 
 ---
 
@@ -313,9 +315,9 @@ Foi utilizado um planeamento dividido em fases principais:
 
 ## 9. Conclusões (opcional, mas normalmente útil)
 
-- Resumo dos resultados alcançados.  
-- Principais dificuldades técnicas e organizacionais.  
-- Possíveis melhorias e trabalho futuro (novas funcionalidades, otimizações, etc.).  
+- Resumo dos resultados alcançados. Melhor compreenção do que está por detrás até de uma aplicação simples, a importância de um código organizado. Inicialmente, o grupo tinha grandes ambições e ideias que até eram boas, mas com o tempo muitas tiveram que ser cortadas pois não havia ou tempo ou resources suficientes para tudo. 
+- Principais dificuldades técnicas e organizacionais. Configuração de algumas API's e a marcação das áreas.
+- Possíveis melhorias e trabalho futuro, novas funcionalidades: criação de varios tipos de grupos para competições exemplo, grupo de familia, grupo do trabalho e grupo de amigos. Criação de desafios temporários, por exemplo no natal correr em um percurso cuja a area fique um boneco de neve.   
 
 ---
 
