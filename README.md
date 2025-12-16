@@ -20,7 +20,7 @@
 **Repositório GitHub:** https://github.com/bentodorey/Walk4Conquest  
 **Video promocional:** https://www.canva.com/design/DAGUrp0sBsU/aOAsDCNApVAeYyBM8psb5w/edit?utm_content=DAGUrp0sBsU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
-<img width="1587" height="2245" alt="1" src="https://github.com/user-attachments/assets/d4a16d12-e2e5-48b7-a668-ce7a40c9126a" />
+![Uploading Cartaz Divulgação de Evento Esportivo (Caminhada, Dia de Golfe, Dia de Tênis) Estilo Fotocêntrico com Molduras Dinâmicas Verde Amarelo-claro Creme.png…]()
 
 ---
 
